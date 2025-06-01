@@ -992,7 +992,7 @@ header {
   color: #fff;
   border: 2px solid #a94442; }
   .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
-    background: #d49af9 !important;
+    background: #a94442 !important;
     border-color: #d49af9 !important; }
   .btn-primary.btn-outline {
     background: transparent;
