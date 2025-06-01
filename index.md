@@ -8,7 +8,7 @@ classes: wide
 ![IVNV](assets/images/banner.jpg)
 
 
-<div style="text-align:center;">
+<div>
   <h1 style="font-weight:bold; font-size:2rem; color:white;">Welcome to the official site of <span style='letter-spacing: 1px;'>IVNV</span></h1>
   <p style="font-size:1.2rem; color:#ccc;">
   
