@@ -29,8 +29,14 @@ IVNV's musical journeys make you move your body – and your soul.
 
 ---
 
-<div style="text-align:center; font-size:1.1rem;">
-  <a href="/about" style="margin: 0 15px; color:#fff;">About</a>
-  <a href="/sets" style="margin: 0 15px; color:#fff;">Sets</a>
-  <a href="/contact" style="margin: 0 15px; color:#fff;">Contact</a>
+<div style="text-align:center;">
+  <a href="https://soundcloud.com/ivnv_music" target="_blank" style="margin: 0 10px;">
+    <i class="fab fa-soundcloud" style="font-size: 1.8rem; color: white;"></i>
+  </a>
+  <a href="https://instagram.com/ivnv_music" target="_blank" style="margin: 0 10px;">
+    <i class="fab fa-instagram" style="font-size: 1.8rem; color: white;"></i>
+  </a>
+  <a href="https://youtube.com/@ivnv_music" target="_blank" style="margin: 0 10px;">
+    <i class="fab fa-youtube" style="font-size: 1.8rem; color: white;"></i>
+  </a>
 </div>
