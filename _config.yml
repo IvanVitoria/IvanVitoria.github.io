@@ -1,0 +1,60 @@
+# _config.yml for Minimal Mistakes Jekyll theme setup
+
+# Site settings
+title: IVNV Music
+description: >-  
+  dark & lovely. Emerging Catalan DJ, passionate about techno in all its forms. IVNV connects with people on the dance floor through powerful techno inspired by Berlin’s underground, the emotional melodies of Barcelona’s current scene, and the timeless rhythms of Balearic house from Ibiza. 
+  
+  IVNV's musical journeys make you move your body – and your soul.
+name: IVNV
+url: "https://www.ivnvmusic.com"  # Custom domain
+repository: IvanVitoria/IvanVitoria.github.io
+
+# Author
+author:
+  name: IVNV
+  avatar: "/assets/images/avatar.jpg"  # Add your image later
+  bio: >-
+    Emerging Catalan DJ, passionate about techno in all its forms. IVNV connects with people on the dance floor through powerful techno inspired by Berlin’s underground, the emotional melodies of Barcelona’s current scene, and the timeless rhythms of Balearic house from Ibiza.
+    
+    IVNV's musical journeys make you move your body – and your soul.
+  location: Barcelona
+  links:
+    - label: "SoundCloud"
+      icon: "fab fa-soundcloud"
+      url: "https://soundcloud.com/ivnv_music"
+    - label: "Instagram"
+      icon: "fab fa-instagram"
+      url: "https://instagram.com/ivnv_music"
+
+# Theme settings
+remote_theme: "mmistakes/minimal-mistakes"
+plugins:
+  - jekyll-include-cache
+
+# Navigation
+header_pages:
+  - index.md
+  - about.md
+  - sets.md
+  - contact.md
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
+# Exclude these files from production
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: single
+      author_profile: true
