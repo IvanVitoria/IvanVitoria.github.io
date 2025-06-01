@@ -64,5 +64,6 @@ defaults:
       path: ""
       type: "pages"
     values:
+      layout: "home"
       css: "/assets/css/custom.css"
 
