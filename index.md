@@ -7,12 +7,6 @@ classes: wide dark-mode
 
 ![IVNV](assets/images/banner.jpg)
 
-Emerging Catalan DJ, passionate about techno in all its forms. IVNV connects with people on the dance floor through powerful techno inspired by Berlin’s underground, the emotional melodies of Barcelona’s current scene, and the timeless rhythms of Balearic house from Ibiza.
-
-IVNV's musical journeys make you move your body – and your soul.
-
-
-
 
 <div style="text-align:center;">
   <h1 style="font-weight:bold; font-size:2rem; color:white;">Welcome to the official site of <span style='letter-spacing: 1px;'>IVNV</span></h1>
