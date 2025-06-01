@@ -2,7 +2,7 @@
 layout: home
 title: "dark & lovely"
 permalink: /
-classes: wide dark-mode
+classes: wide
 ---
 
 ![IVNV](assets/images/banner.jpg)
