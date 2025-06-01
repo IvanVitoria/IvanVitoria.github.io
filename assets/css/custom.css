@@ -5,6 +5,10 @@ body {
   color: #eee !important;
 }
 
+.page {
+  background-color: #111 !important;
+}
+
 h1, h2, h3, h4, h5, h6 {
   color: #fff !important;
 }
@@ -18,8 +22,14 @@ a:hover {
 }
 
 .page__content {
-  background-color: #111;
+  background-color: #111 !important;
   border: none;
+}
+
+footer,
+.site-footer {
+  background: #000 !important;
+  color: #888 !important;
 }
 
 hr {

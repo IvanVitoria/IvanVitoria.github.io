@@ -53,7 +53,8 @@ exclude:
 # Enable custom elements
 include:
   - _includes/head-custom.html
-
+  
+# Enable custom CSS
 sass:
   style: compressed
 
