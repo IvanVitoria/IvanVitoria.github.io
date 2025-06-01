@@ -5,33 +5,12 @@ body {
   color: #eee !important;
 }
 
-.page {
-  background-color: #111 !important;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  color: #fff !important;
-}
-
-a {
-  color: #bbb;
-}
-
-a:hover {
-  color: #fff;
-}
-
 .page__content {
   background-color: #111 !important;
-  border: none;
 }
 
 footer,
 .site-footer {
   background: #000 !important;
   color: #888 !important;
-}
-
-hr {
-  border-top: 1px solid #444;
 }
