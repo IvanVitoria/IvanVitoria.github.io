@@ -25,4 +25,5 @@ Hand-authored static site for IVNV (Barcelona techno DJ), served by GitHub Pages
 
 - Bootstrapped from a Colorlib template: `colorlib-*` class names, Bootstrap 3 grid (`col-md-*`), and the Icomoon icon font are all in use.
 - SEO metadata is inline in `index.html` `<head>`: OG/Twitter tags plus a JSON-LD array of `MusicGroup` and `MusicEvent` objects. Adding a gig requires editing **both** the JSON-LD events and the "Selected Appearances" list in the body.
+- `robots.txt` and `sitemap.xml` sit at the repo root and must stay in sync with the page: bump `<lastmod>` when `index.html` changes, and add a `<url>` entry when a new page is created. The sitemap lists canonical URLs only (no `/index.html`).
 - `CNAME` pins the custom domain `www.ivnvmusic.com`; OG URLs use the `www.` host.
