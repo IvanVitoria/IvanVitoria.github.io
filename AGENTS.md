@@ -12,7 +12,6 @@ Hand-authored static site for IVNV (Barcelona techno DJ), served by GitHub Pages
 ## Critical gotchas
 
 - **Custom CSS lives at the bottom of `css/style.css`** (roughly line 1320+: `.ivnv-logo-large-bold`, `.sc-credit`, `.center-container`, `.cta-wrapper-*`, `.secondary-btn-custom`, `.section-bio`, `.list-no-style`, ...). These rules are **not** in `sass/style.scss`. Recompiling the SCSS **overwrites `css/style.css` and deletes them**. Prefer editing `css/style.css` directly; if you must recompile, re-append the custom block afterward.
-- `index.html` links `favicon.ico` at the repo root, but **the file does not exist**. It is a known dangling reference — don't invent a replacement unless asked.
 - The social-icon rows and the CONTACT / VIEW PRESS KIT CTA blocks are **duplicated twice** in `index.html`. Update both when changing contact/social links.
 - `css/style.css.map` exists but `style.css` has no `sourceMappingURL` comment, so it is effectively unused (the README's claim about it is inaccurate).
 
@@ -26,4 +25,5 @@ Hand-authored static site for IVNV (Barcelona techno DJ), served by GitHub Pages
 
 - Bootstrapped from a Colorlib template: `colorlib-*` class names, Bootstrap 3 grid (`col-md-*`), and the Icomoon icon font are all in use.
 - SEO metadata is inline in `index.html` `<head>`: OG/Twitter tags plus a JSON-LD array of `MusicGroup` and `MusicEvent` objects. Adding a gig requires editing **both** the JSON-LD events and the "Selected Appearances" list in the body.
+- `robots.txt` and `sitemap.xml` sit at the repo root and must stay in sync with the page: bump `<lastmod>` when `index.html` changes, and add a `<url>` entry when a new page is created. The sitemap lists canonical URLs only (no `/index.html`).
 - `CNAME` pins the custom domain `www.ivnvmusic.com`; OG URLs use the `www.` host.
