@@ -12,7 +12,6 @@ Hand-authored static site for IVNV (Barcelona techno DJ), served by GitHub Pages
 ## Critical gotchas
 
 - **Custom CSS lives at the bottom of `css/style.css`** (roughly line 1320+: `.ivnv-logo-large-bold`, `.sc-credit`, `.center-container`, `.cta-wrapper-*`, `.secondary-btn-custom`, `.section-bio`, `.list-no-style`, ...). These rules are **not** in `sass/style.scss`. Recompiling the SCSS **overwrites `css/style.css` and deletes them**. Prefer editing `css/style.css` directly; if you must recompile, re-append the custom block afterward.
-- `index.html` links `favicon.ico` at the repo root, but **the file does not exist**. It is a known dangling reference — don't invent a replacement unless asked.
 - The social-icon rows and the CONTACT / VIEW PRESS KIT CTA blocks are **duplicated twice** in `index.html`. Update both when changing contact/social links.
 - `css/style.css.map` exists but `style.css` has no `sourceMappingURL` comment, so it is effectively unused (the README's claim about it is inaccurate).
 
