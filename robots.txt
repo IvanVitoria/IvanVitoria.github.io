@@ -11,6 +11,7 @@
 
 User-agent: *
 Allow: /
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 
 # ---------------------------------------------------------------------------
 # Commercial SEO crawlers. They add no ranking value and only feed third-party
@@ -38,13 +39,26 @@ User-agent: serpstatbot
 Disallow: /
 
 # ---------------------------------------------------------------------------
-# Optional: bulk dataset and AI-training crawlers.
+# AI training: ALLOWED by policy.
 #
-# These do not affect Google or Bing ranking, and blocking them does not change
-# AI Overviews or ChatGPT/Perplexity citations (those use Googlebot, OAI-SearchBot,
-# PerplexityBot and friends, which stay allowed above). Uncomment the block to opt
-# out of model training and dataset collection at the cost of less latent brand
-# knowledge in those models.
+# The Content-Signal line above is the single source of truth (ai-train=yes).
+# Training crawlers do not affect Google or Bing ranking, and they are not on
+# the citation path: AI Overviews and ChatGPT/Perplexity/Claude citations use
+# Googlebot, OAI-SearchBot, PerplexityBot, Claude-SearchBot and the *-User
+# fetchers, which stay allowed either way.
+#
+# Training is allowed because the upside (latent brand knowledge in models) is
+# worth more to a small artist site than the downside, and opting out is not
+# reversible for data already crawled.
+#
+# To opt out later: set ai-train=no above AND uncomment the block below.
+# Note: Google-Extended is the one token with a visibility side-effect - it can
+# also reduce how Gemini Answers ground on this content (Search is unaffected),
+# so leave it out unless you accept that.
+#
+# Image-specific blocking (ImagesiftBot) is intentionally NOT used: the
+# portrait is already published on Instagram, Resident Advisor and the press
+# kit, so blocking this site alone would protect nothing.
 # ---------------------------------------------------------------------------
 # User-agent: GPTBot
 # Disallow: /
