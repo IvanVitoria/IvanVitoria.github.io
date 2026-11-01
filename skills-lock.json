@@ -7,6 +7,12 @@
       "skillPath": "skills/ai-seo/SKILL.md",
       "computedHash": "ab9f53365e416f9234abb5d452d0d7c3571e796359f4821d0d0dd951ef140e97"
     },
+    "impeccable": {
+      "source": "pbakaus/impeccable",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/impeccable/SKILL.md",
+      "computedHash": "19ae27fe372abbad4236a8dcd01f4b36a8d916a796ea5c2d5a84e13efdde3949"
+    },
     "seo-audit": {
       "source": "coreyhaines31/marketingskills",
       "sourceType": "github",
