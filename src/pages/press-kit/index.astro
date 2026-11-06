@@ -1,0 +1,365 @@
+---
+import { Image } from 'astro:assets';
+
+import pressPhoto from '../../assets/press/unplug-dancefloor.jpg';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import {
+  MUSIC,
+  SOUNDCLOUD_SERIES,
+  YOUTUBE_CHANNEL,
+} from '../../data/music';
+import { SITE } from '../../data/site';
+import { formatDate } from '../../lib/format';
+import {
+  breadcrumbSchema,
+  musicGroupSchema,
+  profilePageSchema,
+} from '../../lib/schema';
+
+const pageUrl = `${SITE.url}/press-kit/`;
+const fullSetHref =
+  MUSIC.find((entry) => entry.kind === 'set')?.href ?? YOUTUBE_CHANNEL;
+const jsonLd = [
+  musicGroupSchema(),
+  profilePageSchema(pageUrl),
+  breadcrumbSchema([
+    { name: 'Home', url: `${SITE.url}/` },
+    { name: 'Press kit', url: pageUrl },
+  ]),
+];
+const profileLinks = SITE.socials;
+---
+
+<BaseLayout
+  title="IVNV — Press Kit | Techno DJ, Barcelona"
+  description="Electronic press kit for IVNV: bio, genres, BPM, recognition, press photo, official profiles and booking contact."
+  image="/images/og-press-kit.jpg"
+  imageAlt="IVNV performing to a crowd at Unplug in Barcelona"
+  type="website"
+  jsonLd={jsonLd}
+  markdown="/press-kit.md"
+  current="/press-kit/"
+>
+  <section class="border-b border-line py-12 md:py-16 lg:py-20">
+    <div class="mx-auto max-w-page px-4 md:px-8 lg:px-12">
+      <div class="mb-8 flex flex-wrap items-center justify-between gap-4">
+        <a
+          href="/"
+          class="font-mono text-xs uppercase tracking-[0.16em] text-muted transition-colors hover:text-ink"
+        >
+          ← Back to ivnvmusic.com
+        </a>
+        <span class="font-mono text-xs uppercase tracking-[0.16em] text-muted">
+          Electronic press kit // 2026
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-14">
+        <div class="lg:col-span-6">
+          <div class="rounded-2xl border border-line bg-gradient-to-br from-surface-raised via-surface to-base p-6 sm:p-8">
+            <div class="border-b border-line pb-5">
+              <p class="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-glow">
+                Artist dossier
+              </p>
+              <h1 class="font-display text-4xl font-extrabold uppercase tracking-tight text-ink sm:text-5xl">
+                IVNV
+              </h1>
+              <p class="mt-2 font-mono text-[12px] uppercase tracking-[0.12em] text-muted">
+                Barcelona, Spain • DJ
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-6 border-b border-line py-6 md:grid-cols-12">
+              <div class="md:col-span-7">
+                <p class="mb-3 font-mono text-xs uppercase tracking-[0.16em] text-muted">
+                  Genres
+                </p>
+                <ul class="flex flex-col gap-2 font-mono text-[12px] text-body">
+                  {
+                    SITE.genreTags.map((genre) => (
+                      <li class="flex items-center gap-2">
+                        <span aria-hidden="true" class="h-1.5 w-1.5 shrink-0 bg-glow" />
+                        <span class="font-medium text-ink">{genre}</span>
+                      </li>
+                    ))
+                  }
+                </ul>
+              </div>
+              <div class="border-t border-line pt-4 md:col-span-5 md:border-l md:border-t-0 md:pl-5 md:pt-0">
+                <p class="mb-3 font-mono text-xs uppercase tracking-[0.16em] text-muted">
+                  BPM
+                </p>
+                <p class="font-mono text-3xl font-extrabold tracking-tight text-ink">
+                  {SITE.bpm}
+                </p>
+              </div>
+            </div>
+
+            <div class="py-6">
+              <p class="mb-3 font-mono text-xs uppercase tracking-[0.16em] text-muted">
+                Full bio
+              </p>
+              <div class="space-y-3 text-[14px] leading-relaxed text-body sm:text-[15px]">
+                {SITE.bio.map((paragraph) => <p>{paragraph}</p>)}
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-3 border-t border-line pt-5">
+              <a
+                href={`mailto:${SITE.email}`}
+                class="inline-flex items-center gap-2 rounded-lg bg-glow px-5 py-3 font-mono text-xs font-bold uppercase tracking-[0.12em] text-black transition-colors hover:bg-ink"
+              >
+                Booking request
+                <span aria-hidden="true">→</span>
+              </a>
+              <a
+                href="/"
+                class="inline-flex items-center gap-2 rounded-lg border border-line-strong bg-surface-raised px-4 py-3 font-mono text-xs uppercase tracking-[0.12em] text-body transition-colors hover:border-ink hover:text-ink"
+              >
+                Main site
+                <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-6">
+          <div class="overflow-hidden rounded-xl border border-line bg-surface">
+            <div class="relative aspect-[4/3] overflow-hidden bg-base">
+              <Image
+                src={pressPhoto}
+                alt="IVNV performing to a crowd at Unplug in Barcelona"
+                width={1280}
+                widths={[640, 960, 1280]}
+                sizes="(min-width: 1024px) 45vw, 100vw"
+                format="webp"
+                quality={80}
+                loading="eager"
+                fetchpriority="high"
+                class="h-full w-full object-cover grayscale contrast-125"
+              />
+              <div
+                class="absolute inset-x-3 bottom-3 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-line bg-base/80 px-3 py-2 font-mono text-xs uppercase tracking-[0.14em] text-body backdrop-blur-sm"
+              >
+                <span>Live // Unplug, Barcelona</span>
+                <span class="font-bold text-glow">Press photo</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 border-t border-line pt-6">
+            <p class="mb-4 font-mono text-xs uppercase tracking-[0.16em] text-muted">
+              Official profiles // platforms
+            </p>
+            <div class="flex flex-wrap items-center gap-x-6 gap-y-3">
+              {
+                profileLinks.map((profile) => (
+                  <a
+                    href={profile.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="group inline-flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-[0.12em] text-body transition-colors hover:text-glow"
+                  >
+                    {profile.label}
+                    <span
+                      aria-hidden="true"
+                      class="text-glow transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                    >
+                      ↗
+                    </span>
+                    <span class="sr-only">(opens in a new tab)</span>
+                  </a>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-b border-line py-12 md:py-16">
+    <div class="mx-auto max-w-page px-4 md:px-8 lg:px-12">
+      <div class="mb-8 border-b border-line pb-4">
+        <p class="mb-1 font-mono text-xs uppercase tracking-[0.16em] text-glow">
+          Press facts
+        </p>
+        <h2 class="font-display text-2xl font-extrabold uppercase tracking-tight text-ink sm:text-3xl">
+          At a glance
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div class="rounded-xl border border-line bg-surface p-5">
+          <p class="font-mono text-xs uppercase tracking-[0.16em] text-muted">Recognition</p>
+          <a
+            href={fullSetHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-3 block font-mono text-sm font-bold uppercase leading-snug tracking-[0.04em] text-ink transition-colors hover:text-glow"
+          >
+            Mad Cool DJ Talent 2026 — Top 50 finalist ↗
+            <span class="sr-only">(opens in a new tab)</span>
+          </a>
+          <p class="mt-3 text-sm leading-relaxed text-muted">
+            Official full set published on YouTube.
+          </p>
+        </div>
+
+        <div class="rounded-xl border border-line bg-surface p-5">
+          <p class="font-mono text-xs uppercase tracking-[0.16em] text-muted">Series</p>
+          <a
+            href={SOUNDCLOUD_SERIES}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-3 block font-mono text-sm font-bold uppercase leading-snug tracking-[0.04em] text-ink transition-colors hover:text-glow"
+          >
+            DARK &amp; LOVELY — 15 episodes ↗
+            <span class="sr-only">(opens in a new tab)</span>
+          </a>
+          <p class="mt-3 text-sm leading-relaxed text-muted">
+            Recorded sets across raw, deep, hypnotic, peak-time and minimal techno.
+          </p>
+        </div>
+
+        <div class="rounded-xl border border-line bg-surface p-5">
+          <p class="font-mono text-xs uppercase tracking-[0.16em] text-muted">Based in</p>
+          <p class="mt-3 font-mono text-sm font-bold uppercase leading-snug tracking-[0.04em] text-ink">
+            Barcelona, Catalonia
+          </p>
+          <p class="mt-3 text-sm leading-relaxed text-muted">
+            For club nights, private events and collaborations.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-b border-line py-12 md:py-16">
+    <div class="mx-auto max-w-page px-4 md:px-8 lg:px-12">
+      <div class="mb-8 flex flex-col gap-3 border-b border-line pb-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p class="mb-1 font-mono text-xs uppercase tracking-[0.16em] text-glow">
+            Recorded archive // DARK &amp; LOVELY
+          </p>
+          <h2 class="font-display text-2xl font-extrabold uppercase tracking-tight text-ink sm:text-3xl">
+            Recorded sets
+          </h2>
+        </div>
+        <p class="max-w-sm text-sm leading-relaxed text-muted">
+          15 episodes plus the Mad Cool full set. Every link opens on YouTube or
+          SoundCloud.
+        </p>
+      </div>
+
+      <div class="overflow-hidden rounded-2xl border border-line bg-surface">
+        <div
+          class="hidden border-b border-line px-5 py-3 font-mono text-xs uppercase tracking-[0.16em] text-muted sm:grid sm:grid-cols-[minmax(0,1fr)_7rem_5rem] sm:gap-4"
+        >
+          <span>Set &amp; recording</span>
+          <span>Published</span>
+          <span class="text-right">Listen</span>
+        </div>
+        {
+          MUSIC.map((entry) => (
+            <a
+              href={entry.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group grid grid-cols-1 gap-2 border-b border-line px-5 py-4 transition-colors last:border-b-0 hover:bg-panel/40 sm:grid-cols-[minmax(0,1fr)_7rem_5rem] sm:items-center sm:gap-4"
+            >
+              <div class="min-w-0">
+                <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                  <span class="font-mono text-sm font-bold text-ink">
+                    {entry.kind === 'episode' ? (
+                      <>
+                        DARK &amp; LOVELY <span class="text-glow">#{entry.episode}</span>
+                      </>
+                    ) : (
+                      'MAD COOL DJ TALENT 2026'
+                    )}
+                  </span>
+                  {entry.kind === 'set' && (
+                    <span class="border border-glow px-1.5 py-0.5 font-mono text-xs uppercase tracking-[0.12em] text-glow">
+                      Top 50 finalist
+                    </span>
+                  )}
+                </div>
+                {!(entry.kind === 'episode' && entry.title.startsWith('DARK & LOVELY')) && (
+                  <p class="mt-1 text-sm leading-snug text-body">{entry.title}</p>
+                )}
+              </div>
+              <span class="font-mono text-xs uppercase tracking-[0.12em] text-muted">
+                {formatDate(entry.published)}
+              </span>
+              <span class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-ink sm:justify-end">
+                Watch
+                <span
+                  aria-hidden="true"
+                  class="text-glow transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                >
+                  ↗
+                </span>
+                <span class="sr-only">(opens in a new tab)</span>
+              </span>
+            </a>
+          ))
+        }
+      </div>
+
+      <div class="mt-5 flex flex-wrap gap-3">
+        <a
+          href={YOUTUBE_CHANNEL}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 rounded-lg border border-line-strong bg-surface-raised px-4 py-3 font-mono text-xs uppercase tracking-[0.12em] text-body transition-colors hover:border-glow hover:text-glow"
+        >
+          YouTube channel
+          <span aria-hidden="true">↗</span>
+          <span class="sr-only">(opens in a new tab)</span>
+        </a>
+        <a
+          href={SOUNDCLOUD_SERIES}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 rounded-lg border border-line-strong bg-surface-raised px-4 py-3 font-mono text-xs uppercase tracking-[0.12em] text-body transition-colors hover:border-glow hover:text-glow"
+        >
+          SoundCloud playlist
+          <span aria-hidden="true">↗</span>
+          <span class="sr-only">(opens in a new tab)</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 md:py-16">
+    <div class="mx-auto max-w-page px-4 md:px-8 lg:px-12">
+      <div class="rounded-2xl border border-line bg-gradient-to-br from-surface-raised via-surface to-base p-6 sm:p-8">
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-12 md:items-end">
+          <div class="md:col-span-8">
+            <p class="mb-3 font-mono text-xs uppercase tracking-[0.16em] text-glow">
+              Press &amp; booking contact
+            </p>
+            <h2 class="font-display text-3xl font-extrabold uppercase tracking-tight text-ink sm:text-4xl">
+              One address. No gatekeepers.
+            </h2>
+            <a
+              href={`mailto:${SITE.email}`}
+              class="mt-4 block break-all font-mono text-xl font-bold text-ink transition-colors hover:text-glow sm:text-2xl"
+            >
+              {SITE.email}
+            </a>
+          </div>
+          <div class="md:col-span-4 md:text-right">
+            <a
+              href={`mailto:${SITE.email}`}
+              class="inline-block rounded-lg bg-ink px-5 py-3 font-mono text-xs font-bold uppercase tracking-[0.12em] text-black transition-colors hover:bg-glow"
+            >
+              Send an email →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

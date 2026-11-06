@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page not found | IVNV"
+  description="The requested page was not found. Explore IVNV's music, appearances and press kit."
+  noindex={true}
+  canonical="/404.html"
+  current="/"
+>
+  <section class="border-b border-line py-20 md:py-28">
+    <div class="mx-auto max-w-page px-4 md:px-8 lg:px-12">
+      <p class="mb-4 font-mono text-xs uppercase tracking-[0.16em] text-glow">
+        404 // Signal lost
+      </p>
+      <h1
+        class="font-display text-[84px] font-extrabold uppercase leading-[0.82] tracking-[-0.03em] text-ink sm:text-[112px] lg:text-[132px]"
+      >
+        404
+      </h1>
+      <p class="mt-6 max-w-xl text-[16px] leading-[1.65] text-body">
+        This page is not in the archive. Return to the home page or go straight
+        to the press kit.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a
+          href="/"
+          class="inline-block bg-ink px-6 py-3 font-mono text-xs font-bold uppercase tracking-[0.14em] text-black transition-colors hover:bg-body"
+        >
+          Back to home →
+        </a>
+        <a
+          href="/press-kit/"
+          class="inline-block border border-line-strong px-5 py-3 font-mono text-xs uppercase tracking-[0.14em] text-ink transition-colors hover:border-glow hover:text-glow"
+        >
+          Press kit →
+        </a>
+        <a
+          href="/#music"
+          class="inline-block border border-line-strong px-5 py-3 font-mono text-xs uppercase tracking-[0.14em] text-body transition-colors hover:border-glow hover:text-glow"
+        >
+          Music →
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

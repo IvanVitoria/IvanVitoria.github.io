@@ -1,0 +1,98 @@
+---
+import { NAV_LINKS, SITE } from '../data/site';
+
+const year = new Date().getFullYear();
+const socialLinks = SITE.socials;
+---
+
+<footer class="border-t border-line">
+  <div class="mx-auto max-w-page px-4 py-10 md:px-8 lg:px-12">
+    <div class="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
+      <div class="max-w-sm">
+        <a
+          href="/"
+          class="font-display text-2xl font-extrabold uppercase leading-none tracking-[-0.04em] text-ink transition-colors hover:text-glow"
+        >
+          IVNV
+        </a>
+        <p class="mt-4 text-sm leading-relaxed text-muted">
+          Techno DJ based in Barcelona, Catalonia. Raw, deep, hypnotic, peak-time
+          and minimal techno.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-3">
+        <nav aria-label="Footer navigation">
+          <p class="font-mono text-xs uppercase tracking-[0.18em] text-muted">Explore</p>
+          <ul class="mt-4 space-y-3">
+            {
+              NAV_LINKS.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    class="font-mono text-xs uppercase tracking-[0.12em] text-muted transition-colors hover:text-ink"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))
+            }
+            <li>
+              <a
+                href="/#booking"
+                class="font-mono text-xs uppercase tracking-[0.12em] text-muted transition-colors hover:text-ink"
+              >
+                Booking
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div>
+          <p class="font-mono text-xs uppercase tracking-[0.18em] text-muted">Contact</p>
+          <ul class="mt-4 space-y-3">
+            <li>
+              <a
+                href={`mailto:${SITE.email}`}
+                class="font-mono text-xs tracking-[0.08em] text-glow underline decoration-line-strong underline-offset-4 hover:text-ink"
+              >
+                {SITE.email}
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="font-mono text-xs uppercase tracking-[0.18em] text-muted">Profiles</p>
+          <ul class="mt-4 space-y-3">
+            {
+              socialLinks.map((profile) => (
+                <li>
+                  <a
+                    href={profile.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-muted transition-colors hover:text-ink"
+                  >
+                    {profile.label}
+                    <span aria-hidden="true" class="text-glow transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
+                      ↗
+                    </span>
+                    <span class="sr-only">(opens in a new tab)</span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="mt-10 flex flex-col gap-3 border-t border-line pt-6 font-mono text-xs uppercase tracking-[0.16em] text-muted sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p>© {year} IVNV. All rights reserved.</p>
+      <p>Barcelona // Catalonia</p>
+    </div>
+  </div>
+</footer>

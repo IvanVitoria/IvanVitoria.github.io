@@ -1,0 +1,63 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  imageAlt?: string;
+  type?: 'website' | 'profile' | 'article';
+  noindex?: boolean;
+  jsonLdString?: string | null;
+  markdown?: string;
+  canonical?: string;
+}
+
+const {
+  title,
+  description,
+  image = '/images/og-ivnv.jpg',
+  imageAlt = 'IVNV - techno DJ from Barcelona',
+  type = 'website',
+  noindex = false,
+  jsonLdString,
+  markdown,
+  canonical,
+} = Astro.props;
+
+const site = Astro.site ?? new URL('https://www.ivnvmusic.com');
+const canonicalUrl = new URL(canonical ?? Astro.url.pathname, site).href;
+const imageUrl = new URL(image, site).href;
+const markdownUrl = markdown ? new URL(markdown, site).href : null;
+const robots = noindex
+  ? 'noindex, nofollow'
+  : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="author" content="IVNV" />
+<meta name="robots" content={robots} />
+<link rel="canonical" href={canonicalUrl} />
+{markdownUrl && <link rel="alternate" type="text/markdown" href={markdownUrl} title="Markdown version" />}
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#000000" />
+
+<meta property="og:locale" content="en_US" />
+<meta property="og:site_name" content="IVNV" />
+<meta property="og:type" content={type} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:image:secure_url" content={imageUrl} />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={imageAlt} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+<meta name="twitter:image:alt" content={imageAlt} />
+
+{jsonLdString && <script type="application/ld+json" set:html={jsonLdString} />}

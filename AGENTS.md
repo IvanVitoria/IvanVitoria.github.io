@@ -1,31 +1,137 @@
 # AGENTS.md
 
-Hand-authored static site for IVNV (Barcelona techno DJ), served by GitHub Pages from the repo root at https://www.ivnvmusic.com.
+Official website for **IVNV**, a techno DJ from Barcelona. The production site is a
+two-page **Astro 7 + Tailwind CSS 4** app under `src/`, deployed to GitHub Pages at
+**https://www.ivnvmusic.com**.
 
-## What to know before touching anything
-
-- **No build system.** No `package.json`, lockfile, CI, tests, linter, formatter, or typecheck. Files are served as-is.
-- **`main` is production.** A push/merge to `main` goes live within minutes. Work lands via PRs into `main` (see git log).
-- **Single page.** Only `index.html` exists. `js/main.js` is the only custom JS (jQuery IIFE using Owl Carousel + Waypoints); everything else in `js/` and `css/` is vendored libs.
-- Repo history has a `backup_jekyll` branch, but the live site is plain static. Do **not** reintroduce Jekyll (`_config.yml`, Gemfile, `_posts`, etc.).
-
-## Critical gotchas
-
-- **Custom CSS lives at the bottom of `css/style.css`** (roughly line 1320+: `.ivnv-logo-large-bold`, `.sc-credit`, `.center-container`, `.cta-wrapper-*`, `.secondary-btn-custom`, `.section-bio`, `.list-no-style`, ...). These rules are **not** in `sass/style.scss`. Recompiling the SCSS **overwrites `css/style.css` and deletes them**. Prefer editing `css/style.css` directly; if you must recompile, re-append the custom block afterward.
-- The social-icon rows and the CONTACT / VIEW PRESS KIT CTA blocks are **duplicated twice** in `index.html`. Update both when changing contact/social links.
-- `css/style.css.map` exists but `style.css` has no `sourceMappingURL` comment, so it is effectively unused (the README's claim about it is inaccurate).
+> **Migration status (2026-11-05):** the Astro app is implemented and builds
+> cleanly on `new_website`. `main` still serves the legacy root-level static site
+> until the GitHub Pages source is switched to GitHub Actions. **Do not delete the
+> legacy files yet.** The legacy `main` is tagged `pre-astro` locally; push it at
+> cutover. See `docs/DEPLOYMENT.md`.
 
 ## Commands
 
-- Preview locally: open `index.html` directly via `file://`. It renders but does not match production paths/OG behavior.
-- Recompile SCSS (only when intended, see gotcha): `sass sass/style.scss css/style.css`. Bootstrap 3 partials live in `sass/bootstrap/` (~70 files), imported by `sass/bootstrap.scss`; also `sass/style.scss`.
-- There is no test/verify command. Validate changes by loading the page in a browser.
+Use `npm.cmd` on Windows PowerShell; `npm.ps1` is blocked on the current machine.
 
-## Editing notes
+```powershell
+npm.cmd install
+npm.cmd run dev
+npm.cmd run build      # astro check && astro build → dist/
+npm.cmd run preview
+npm.cmd run check
+```
 
-- Bootstrapped from a Colorlib template: `colorlib-*` class names, Bootstrap 3 grid (`col-md-*`), and the Icomoon icon font are all in use.
-- SEO metadata is inline in `index.html` `<head>`: OG/Twitter tags plus a JSON-LD array of `MusicGroup` and `MusicEvent` objects. Adding a gig requires editing **both** the JSON-LD events and the "Selected Appearances" list in the body.
-- `robots.txt` and `sitemap.xml` sit at the repo root and must stay in sync with the page: bump `<lastmod>` when `index.html` changes, and add a `<url>` entry when a new page is created. The sitemap lists canonical URLs only (no `/index.html`).
-- `llms.txt` at the repo root is a hand-maintained, machine-readable summary of the site for AI assistants and agents. **It must stay in sync with `index.html`.** Any change to a published fact — bio/sound description, genre or sub-styles, appearances, DARK & LOVELY details, booking/contact email, or the official-profile links (keep the list matching the JSON-LD `sameAs`) — must be mirrored in `llms.txt` in the same commit, and its `Last updated: YYYY-MM-DD` line bumped.
-- `llms.txt` must never contain facts that aren't on the page or an official profile: no inferred event schedule, invented fees, travel radius, or credentials. When in doubt, leave it out — an omission is safe, a wrong fact gets repeated by models as if it were sourced.
-- `CNAME` pins the custom domain `www.ivnvmusic.com`; OG URLs use the `www.` host.
+`npm.cmd run build` must finish with **0 errors, 0 warnings, 0 hints**. There are
+no unit tests; validate changes in a browser and with the build.
+
+## Source of truth
+
+All published facts live in `src/data/`:
+
+- `site.ts` — name, URL, description, email, city/region/country, update date,
+  BPM, recognition, genre tags, bio, social profiles.
+- `appearances.ts` — verified past appearances and the recorded/private entries.
+- `music.ts` — the 15 DARK & LOVELY episodes and the Mad Cool full set.
+
+Pages, JSON-LD, the sitemap, `llms.txt` and `/index.md` + `/press-kit.md` render
+from those files. **Do not duplicate facts in templates.** Update the data, then
+bump `SITE.updated`.
+
+### Content rules
+
+- Verified facts only. No invented venues, event schedules, fees, travel radius,
+  rider details or credentials.
+- Role is **DJ**, not producer.
+- Genres: Techno (Raw / Deep / Hypnotic), Techno (Peak Time / Driving), Minimal
+  Techno. BPM: 138–148.
+- Publish only `contact@ivnvmusic.com`.
+- Five dated club appearances (Fluxs, Lab65 by ELEKTR’ÂME, Unplug, Absenta del
+  Raval, Can Luis Ob Rem), the TechnoZulo recorded set, and the generic private
+  events entry. No upcoming dates are announced.
+- DARK & LOVELY has 15 episodes. Episodes 10 and 11 were published out of numeric
+  order; keep the real numbers and dates.
+- `Oneira Party` and `Slow BCN` were private events. Do not add them as named
+  public bookings; the existing private-events entry stays generic.
+- No photographer credits are published.
+- No ZIP/logo download buttons unless the assets exist.
+
+## Architecture
+
+```
+src/
+  assets/press/       source photos; Astro emits optimized WebP
+  components/         SEO, Header, Footer
+  data/               site, appearances, music
+  layouts/            BaseLayout.astro
+  lib/                schema, format, jsonld, markdown
+  pages/              index.astro, press-kit/index.astro, 404.astro,
+                      sitemap.xml.ts, llms.txt.ts, index.md.ts, press-kit.md.ts
+  styles/             global.css (Tailwind @theme tokens + base)
+public/               CNAME, robots.txt, .nojekyll, favicon, OG images, js/menu.js
+.github/              Pages deploy workflow + Dependabot
+```
+
+- Static output only; no React/Vue/Svelte, CMS, database, server, forms, cookies
+  or analytics.
+- Fonts are self-hosted with `@fontsource-variable` (Anybody, Inter, JetBrains
+  Mono). Do not add Google Fonts or a CDN.
+- The mobile menu is the only custom JS (`public/js/menu.js`, loaded externally
+  so the production CSP can stay strict).
+- Production pages carry a meta CSP. The inline JSON-LD script is allowed by a
+  SHA-256 hash computed in `BaseLayout.astro`; do not add unhashed inline scripts.
+
+## SEO / AEO
+
+- `src/components/SEO.astro` owns canonical, robots, OG/Twitter and JSON-LD.
+- `src/lib/schema.ts` builds `MusicGroup`, `WebSite`, `MusicEvent`, `ProfilePage`
+  and `BreadcrumbList`.
+- `src/pages/sitemap.xml.ts` serves `/sitemap.xml`; keep `/` and `/press-kit/`.
+- `src/pages/llms.txt.ts` serves `/llms.txt`; it is generated from `src/data` and
+  must not be hand-edited.
+- `src/pages/index.md.ts` and `src/pages/press-kit.md.ts` serve Markdown versions;
+  each page advertises its version with `<link rel="alternate" type="text/markdown">`.
+- `public/robots.txt` preserves the existing crawler policy and points at
+  `/sitemap.xml`.
+- Keep `SITE.updated`, the sitemap `lastmod` and the `llms.txt` date in sync.
+
+## Deployment and security
+
+- Deploy via `.github/workflows/deploy.yml` (GitHub Actions → Pages). The Pages
+  source must be **GitHub Actions**; custom domain `www.ivnvmusic.com` and HTTPS
+  stay in place.
+- Runbook and rollback: `docs/DEPLOYMENT.md`.
+- Keep the lockfile committed and use `npm ci` in CI.
+- No secrets, env vars, analytics, iframes or third-party scripts.
+- External links use `target="_blank"` with `rel="noopener noreferrer"` and a
+  screen-reader new-tab hint.
+
+## Legacy site (until cutover)
+
+The root `index.html`, `css/`, `js/`, `sass/`, `fonts/`, `images/`, `robots.txt`,
+`sitemap.xml`, `llms.txt` and `CNAME` are the live site on `main` until the Pages
+source is switched. Do not edit them for the new site and do not delete them
+before tagging `main` as `pre-astro`.
+
+If you must touch the legacy files before cutover:
+
+- Custom CSS lives at the bottom of `css/style.css` (roughly line 1320+). Do not
+  recompile `sass/style.scss` over it; re-append the custom block if you do.
+- The social-icon rows and CONTACT / VIEW PRESS KIT blocks are duplicated twice in
+  `index.html`; update both.
+- Do not reintroduce Jekyll (`_config.yml`, Gemfile, `_posts`, etc.).
+- The root `llms.txt` describes the legacy single-page site. Do not update it with
+  new Astro facts; the generated `dist/llms.txt` replaces it at cutover.
+
+## Validation
+
+- `npm.cmd run build` (types + build).
+- Load `/`, `/press-kit/`, `/404.html`, `/llms.txt`, `/index.md`,
+  `/press-kit.md` and `/sitemap.xml` in a browser/preview.
+- Check 375–390px, 768px and 1400px layouts, keyboard focus, mobile menu open/close
+  and Escape, and internal/external links.
+- Lighthouse targets: 100 performance, 100 accessibility, 100 best practices and
+  100 SEO on mobile. Current pages meet them in the local simulated run. Size
+  budget: home HTML 41 KB raw / 5.7 KB gzip (the raw 40 KB guideline is exceeded
+  only by the JSON-LD and copy), CSS 9.8 KB gzip, JS 231 B gzip, fonts 112.7 KB,
+  mobile LCP 0.8 s.
