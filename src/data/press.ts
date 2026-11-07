@@ -52,13 +52,14 @@ export interface RiderCard {
 export const TECH_RIDER: RiderCard[] = [
   {
     title: 'DJ Mixer',
-    note: '4-channel professional mixer',
+    note: 'Networked via Link (LAN) switch to the CDJs',
     items: [
       { name: 'Pioneer DJM-A9', preferred: true },
-      { name: 'Pioneer DJM-V10' },
+      { name: 'Pioneer DJM-900NXS2' },
       { name: 'Allen & Heath Xone:96' },
       { name: 'Allen & Heath Xone:92' },
-      { name: 'Pioneer DJM-900NXS2' },
+      { name: 'Pioneer DJM-750MK2' },
+      { name: 'Pioneer DJM-450' },
     ],
   },
   {
@@ -68,11 +69,12 @@ export const TECH_RIDER: RiderCard[] = [
       { name: 'Pioneer CDJ-3000', preferred: true },
       { name: 'Pioneer CDJ-3000X' },
       { name: 'Pioneer CDJ-2000NXS2' },
+      { name: 'Pioneer XDJ-1000MK2' },
     ],
   },
   {
     title: 'Monitoring',
-    note: 'Stereo booth monitors',
+    note: 'Minimum 1x required',
     description:
       'High-power stereo booth monitors with independent volume control directly from the mixer booth output.',
   },
