@@ -4,9 +4,14 @@ import { Image } from 'astro:assets';
 import pressPhoto from '../../assets/press/unplug-dancefloor.jpg';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import {
+  MAD_COOL_SET,
   MUSIC,
   SOUNDCLOUD_SERIES,
   YOUTUBE_CHANNEL,
+  musicDisplayTitle,
+  musicPlatformLinks,
+  musicPrimaryHref,
+  musicSecondaryTitle,
 } from '../../data/music';
 import { SITE } from '../../data/site';
 import { formatDate } from '../../lib/format';
@@ -17,8 +22,7 @@ import {
 } from '../../lib/schema';
 
 const pageUrl = `${SITE.url}/press-kit/`;
-const fullSetHref =
-  MUSIC.find((entry) => entry.kind === 'set')?.href ?? YOUTUBE_CHANNEL;
+const fullSetHref = MAD_COOL_SET?.links.youtube ?? YOUTUBE_CHANNEL;
 const jsonLd = [
   musicGroupSchema(),
   profilePageSchema(pageUrl),
@@ -106,7 +110,7 @@ const profileLinks = SITE.socials;
 
             <div class="flex flex-wrap items-center gap-3 border-t border-line pt-5">
               <a
-                href={`mailto:${SITE.email}`}
+                href="/#booking"
                 class="inline-flex items-center gap-2 rounded-lg bg-glow px-5 py-3 font-mono text-xs font-bold uppercase tracking-[0.12em] text-black transition-colors hover:bg-ink"
               >
                 Booking request
@@ -202,7 +206,7 @@ const profileLinks = SITE.socials;
             <span class="sr-only">(opens in a new tab)</span>
           </a>
           <p class="mt-3 text-sm leading-relaxed text-muted">
-            Official full set published on YouTube.
+            Full set on YouTube; contest submission on SoundCloud.
           </p>
         </div>
 
@@ -240,70 +244,85 @@ const profileLinks = SITE.socials;
       <div class="mb-8 flex flex-col gap-3 border-b border-line pb-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p class="mb-1 font-mono text-xs uppercase tracking-[0.16em] text-glow">
-            Recorded archive // DARK &amp; LOVELY
+            Recorded archive // Sets &amp; features
           </p>
           <h2 class="font-display text-2xl font-extrabold uppercase tracking-tight text-ink sm:text-3xl">
             Recorded sets
           </h2>
         </div>
         <p class="max-w-sm text-sm leading-relaxed text-muted">
-          15 episodes plus the Mad Cool full set. Every link opens on YouTube or
-          SoundCloud.
+          15 DARK &amp; LOVELY episodes plus contest sets, radio/podcast features
+          and archive mixes. Every row links to YouTube, SoundCloud or both.
         </p>
       </div>
 
       <div class="overflow-hidden rounded-2xl border border-line bg-surface">
         <div
-          class="hidden border-b border-line px-5 py-3 font-mono text-xs uppercase tracking-[0.16em] text-muted sm:grid sm:grid-cols-[minmax(0,1fr)_7rem_5rem] sm:gap-4"
+          class="hidden border-b border-line px-5 py-3 font-mono text-xs uppercase tracking-[0.16em] text-muted md:grid md:grid-cols-[minmax(0,1.4fr)_minmax(0,0.9fr)_7rem_8rem] md:gap-4"
         >
           <span>Set &amp; recording</span>
+          <span>Series</span>
           <span>Published</span>
           <span class="text-right">Listen</span>
         </div>
         {
-          MUSIC.map((entry) => (
-            <a
-              href={entry.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="group grid grid-cols-1 gap-2 border-b border-line px-5 py-4 transition-colors last:border-b-0 hover:bg-panel/40 sm:grid-cols-[minmax(0,1fr)_7rem_5rem] sm:items-center sm:gap-4"
-            >
-              <div class="min-w-0">
-                <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                  <span class="font-mono text-sm font-bold text-ink">
-                    {entry.kind === 'episode' ? (
-                      <>
-                        DARK &amp; LOVELY <span class="text-glow">#{entry.episode}</span>
-                      </>
+          MUSIC.map((entry) => {
+            const displayTitle = musicDisplayTitle(entry);
+            const secondaryTitle = musicSecondaryTitle(entry);
+            const links = musicPlatformLinks(entry);
+            const primaryHref = musicPrimaryHref(entry);
+
+            return (
+              <div class="grid grid-cols-1 gap-2 border-b border-line px-5 py-4 last:border-b-0 md:grid-cols-[minmax(0,1.4fr)_minmax(0,0.9fr)_7rem_8rem] md:items-center md:gap-4">
+                <div class="min-w-0">
+                  <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                    <span aria-hidden="true" class="text-glow">●</span>
+                    {primaryHref ? (
+                      <a
+                        href={primaryHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class:list={[
+                          'font-mono text-sm font-bold text-ink transition-colors hover:text-glow',
+                          entry.kind === 'episode' && 'whitespace-nowrap',
+                        ]}
+                      >
+                        {displayTitle}
+                        <span class="sr-only">(opens in a new tab)</span>
+                      </a>
                     ) : (
-                      'MAD COOL DJ TALENT 2026'
+                      <span class:list={['font-mono text-sm font-bold text-ink', entry.kind === 'episode' && 'whitespace-nowrap']}>
+                        {displayTitle}
+                      </span>
                     )}
-                  </span>
-                  {entry.kind === 'set' && (
-                    <span class="border border-glow px-1.5 py-0.5 font-mono text-xs uppercase tracking-[0.12em] text-glow">
-                      Top 50 finalist
-                    </span>
+                  </div>
+                  {secondaryTitle && (
+                    <p class="mt-1 text-sm leading-snug text-body">{secondaryTitle}</p>
                   )}
                 </div>
-                {!(entry.kind === 'episode' && entry.title.startsWith('DARK & LOVELY')) && (
-                  <p class="mt-1 text-sm leading-snug text-body">{entry.title}</p>
-                )}
-              </div>
-              <span class="font-mono text-xs uppercase tracking-[0.12em] text-muted">
-                {formatDate(entry.published)}
-              </span>
-              <span class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-ink sm:justify-end">
-                Watch
-                <span
-                  aria-hidden="true"
-                  class="text-glow transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                >
-                  ↗
+                <span class="font-mono text-xs uppercase tracking-[0.12em] text-muted">
+                  {entry.series}
                 </span>
-                <span class="sr-only">(opens in a new tab)</span>
-              </span>
-            </a>
-          ))
+                <span class="font-mono text-xs uppercase tracking-[0.12em] text-muted">
+                  {formatDate(entry.published)}
+                </span>
+                <div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs uppercase tracking-[0.12em] md:flex-col md:items-end">
+                  {links.map((link) => (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex min-h-6 items-center gap-1 text-ink transition-colors hover:text-glow"
+                    >
+                      {link.label}
+                      <span aria-hidden="true">↗</span>
+                      <span class="sr-only">(opens in a new tab)</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            );
+          })
         }
       </div>
 

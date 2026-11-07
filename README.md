@@ -60,7 +60,8 @@ All published facts live in `src/data/`:
 
 - `site.ts` — identity, bio, genres, BPM, recognition, contact, profiles, update date
 - `appearances.ts` — verified past appearances and private/recorded entries
-- `music.ts` — the 15 DARK & LOVELY episodes and the Mad Cool full set
+- `music.ts` — the DARK & LOVELY episodes, contest sets, radio/podcast features
+  and archive mixes, with YouTube and/or SoundCloud links
 
 Pages, JSON-LD, the sitemap, `llms.txt` and the Markdown endpoints all render from
 that data. Do not duplicate facts in templates.
@@ -73,7 +74,9 @@ Content rules:
 - Only `contact@ivnvmusic.com` is published.
 - The five dated club appearances, the TechnoZulo recorded set and the generic
   private-events entry are the complete public appearance list. No upcoming dates
-  are announced.
+  are announced. The visible tour-dates section and navigation link are currently
+  hidden by `SHOW_TOUR_DATES = false` in `src/data/site.ts`; the data and AI/Markdown
+  outputs remain so they can be re-enabled.
 - DARK & LOVELY has 15 episodes. Episodes 10 and 11 were published out of numeric
   order; keep the real dates and numbers.
 - No photographer credits are published.

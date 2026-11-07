@@ -2,12 +2,12 @@ import type { APIRoute } from 'astro';
 import { getImage } from 'astro:assets';
 
 import pressPhoto from '../assets/press/unplug-dancefloor.jpg';
-import { MUSIC, SOUNDCLOUD_SERIES, YOUTUBE_CHANNEL } from '../data/music';
+import { MAD_COOL_SET, MUSIC, SOUNDCLOUD_SERIES, YOUTUBE_CHANNEL } from '../data/music';
 import { SITE } from '../data/site';
 import { musicMarkdown } from '../lib/markdown';
 
 const episodeCount = MUSIC.filter((entry) => entry.kind === 'episode').length;
-const fullSet = MUSIC.find((entry) => entry.kind === 'set');
+const fullSet = MAD_COOL_SET;
 
 export const GET: APIRoute = async () => {
   const image = await getImage({
@@ -45,11 +45,12 @@ ${SITE.bio.join('\n\n')}
 ## Recognition
 
 - ${SITE.recognition}
-${fullSet ? `- Official full set: ${fullSet.href}` : ''}
+${fullSet ? `- Official full set: ${fullSet.links.youtube ?? fullSet.links.soundcloud ?? YOUTUBE_CHANNEL}` : ''}
 
-## Recorded sets: DARK & LOVELY
+## Recorded sets and features
 
-- ${episodeCount} episodes are published on YouTube.
+- ${episodeCount} episodes are published on YouTube and SoundCloud.
+- Contest sets, radio/podcast features and archive mixes are listed below.
 
 ${musicMarkdown()}
 

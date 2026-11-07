@@ -79,8 +79,9 @@ press kit. They share the same type, colour and spacing system.
 - Editorial hero: 12 columns; 7 type / 5 image at `lg`; stacked below.
 - Press kit hero: 12 columns; 6 dossier / 6 photo at `lg`; stacked below.
 - Credential strip: 2 columns below `lg`, 4 at `lg`; 1px gaps form the rules.
-- Music ledger header/rows at `md`: `1.6fr / 1fr / 9rem / 6rem`; stacked below.
-- Appearances rows at `md`: `9rem / minmax(0,1fr) / auto`; stacked below.
+- Music ledger header/rows at `md`: `1.6fr / 1fr / 9rem / 8rem`; stacked below.
+- Appearances rows at `md`: `9rem / minmax(0,1fr) / auto`; stacked below. The
+  section is hidden while `SHOW_TOUR_DATES` is false.
 - Booking: stacked below `lg`; 6/6 columns at `lg`.
 - Footer: single column below `sm`; three columns at `sm`+; brand block to the left
   at `md`+.
@@ -90,10 +91,12 @@ press kit. They share the same type, colour and spacing system.
 ### Header
 
 - 64px tall, sticky, black, 1px bottom rule.
-- Wordmark left; desktop nav right; booking is a bordered button.
+- Wordmark left; desktop nav right; booking is a bordered button that scrolls to
+  the home page's booking section.
 - Below `md`: native `<details>` mobile menu, full-width panel under the header.
 - Current page gets `aria-current="page"` and `text-glow`.
-- Mobile menu links are numbered 01–04.
+- Mobile menu links are numbered dynamically (01–03 with tour dates hidden,
+  01–04 when enabled).
 
 ### Buttons
 
@@ -102,12 +105,22 @@ press kit. They share the same type, colour and spacing system.
 - Dossier primary: `glow` fill, black text, `rounded-lg`.
 - Dossier secondary: `surface-raised`, `line-strong`, `rounded-lg`.
 - Hover: border/text shifts to `glow`; no size or position jumps.
+- Booking CTAs scroll to the home page's `#booking` section; the email actions
+  inside that section remain `mailto:` links.
 
 ### Music ledger
 
-- One link per row; entire row is clickable.
-- Title + episode number, description, series, platform, date, “Watch ↗”.
-- Hairline separators; hover wash `panel/40` and border `glow`.
+- One row per recorded set; the row itself is not clickable.
+- An orange dot leads every row. The title is a link to the primary platform:
+  YouTube when both exist, otherwise SoundCloud.
+- Separate YouTube and SoundCloud links where the set is published; labels stay
+  visible instead of a generic “Watch”.
+- Title (including “Episode N” for DARK & LOVELY), description, series, date and
+  platform links.
+- Series categories: DARK & LOVELY Episodes, Contests, Radio & Podcasts, Mixes.
+  Third-party posts are Radio & Podcasts and link to the host’s page.
+- Hairline separators; the platform links, not the row, carry the hover/focus
+  state.
 - No iframes, embeds, players or fake durations.
 
 ### Photo frames
@@ -136,14 +149,16 @@ press kit. They share the same type, colour and spacing system.
 
 ## Content and empty states
 
-- No upcoming dates is a deliberate state: “No upcoming dates announced” plus the
-  booking email.
+- Tour dates are hidden while `SHOW_TOUR_DATES` is false. When enabled, the
+  no-upcoming-dates state shows the message plus the booking email; the data and
+  AI/Markdown outputs remain.
 - No fake ZIP, rider, logo or photo-count claims.
-- The press kit’s canonical EPK is `/press-kit/`; Mavelpoint remains an official
-  profile.
+- The press kit’s canonical EPK is `/press-kit/`; official profiles are Resident
+  Advisor, SoundCloud, Instagram, YouTube and ELEKTR’ÂME.
 - Only `contact@ivnvmusic.com` is published.
 - The full DARK & LOVELY archive is 15 episodes; the home ledger shows the latest
-  six, and the press kit plus the Markdown endpoints carry the complete list.
+  ten music entries, and the press kit plus the Markdown endpoints carry the
+  complete archive, including contest, radio/podcast and mix entries.
 
 ## Implementation map
 

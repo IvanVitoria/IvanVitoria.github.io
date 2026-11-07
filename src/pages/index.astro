@@ -5,11 +5,16 @@ import heroImage from '../assets/press/slow-bcn.jpg';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { APPEARANCES } from '../data/appearances';
 import {
+  MAD_COOL_SET,
   MUSIC,
-  SOUNDCLOUD_SERIES,
+  SOUNDCLOUD_TRACKS,
   YOUTUBE_CHANNEL,
+  musicDisplayTitle,
+  musicPlatformLinks,
+  musicPrimaryHref,
+  musicSecondaryTitle,
 } from '../data/music';
-import { SITE } from '../data/site';
+import { SHOW_TOUR_DATES, SITE } from '../data/site';
 import { formatDate } from '../lib/format';
 import {
   eventSchemas,
@@ -21,9 +26,8 @@ const jsonLd = [musicGroupSchema(), websiteSchema(), ...eventSchemas()];
 const heroProfiles = SITE.socials.filter((profile) =>
   ['ra', 'soundcloud', 'instagram', 'youtube'].includes(profile.icon),
 );
-const musicRows = MUSIC.slice(0, 6);
-const fullSetHref =
-  MUSIC.find((entry) => entry.kind === 'set')?.href ?? YOUTUBE_CHANNEL;
+const musicRows = MUSIC.slice(0, 10);
+const fullSetHref = MAD_COOL_SET?.links.youtube ?? YOUTUBE_CHANNEL;
 const typeLabels = {
   club: 'Club night',
   recorded: 'Recorded set',
@@ -84,7 +88,7 @@ function appearanceWhen(date: string | undefined, type: string): string {
 
             <div class="flex flex-wrap items-center gap-3">
               <a
-                href={`mailto:${SITE.email}`}
+                href="/#booking"
                 class="inline-block bg-ink px-6 py-3 font-mono text-xs font-bold uppercase tracking-[0.14em] text-black transition-colors hover:bg-body"
               >
                 Booking →
@@ -95,17 +99,19 @@ function appearanceWhen(date: string | undefined, type: string): string {
               >
                 Press kit (EPK) →
               </a>
-              <a
-                href="#tour-dates"
-                class="inline-block border border-line-strong px-5 py-3 font-mono text-xs uppercase tracking-[0.14em] text-body transition-colors hover:border-glow hover:text-glow"
-              >
-                Tour dates →
-              </a>
+              {SHOW_TOUR_DATES && (
+                <a
+                  href="#tour-dates"
+                  class="inline-block border border-line-strong px-5 py-3 font-mono text-xs uppercase tracking-[0.14em] text-body transition-colors hover:border-glow hover:text-glow"
+                >
+                  Tour dates →
+                </a>
+              )}
               <a
                 href="#music"
                 class="inline-block border border-line-strong px-5 py-3 font-mono text-xs uppercase tracking-[0.14em] text-body transition-colors hover:border-glow hover:text-glow"
               >
-                Releases →
+                Music →
               </a>
             </div>
           </div>
@@ -158,55 +164,6 @@ function appearanceWhen(date: string | undefined, type: string): string {
               </div>
             </div>
           </div>
-          <div class="flex items-center justify-between px-1 pt-2 font-mono text-xs uppercase tracking-[0.14em] text-muted">
-            <span>Live documentation</span>
-            <span>Barcelona // ES</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="border-b border-line">
-    <div class="mx-auto max-w-page px-4 md:px-8 lg:px-12">
-      <div class="grid grid-cols-2 gap-px bg-line lg:grid-cols-4">
-        <div class="bg-base p-4 md:p-5">
-          <p class="font-mono text-xs uppercase tracking-[0.18em] text-muted">Recognition</p>
-          <a
-            href={fullSetHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="mt-2 block font-mono text-xs uppercase leading-relaxed tracking-[0.1em] text-ink transition-colors hover:text-glow"
-          >
-            Mad Cool DJ Talent 2026 — Top 50 finalist
-            <span class="sr-only">(opens in a new tab)</span>
-          </a>
-        </div>
-        <div class="bg-base p-4 md:p-5">
-          <p class="font-mono text-xs uppercase tracking-[0.18em] text-muted">Sound</p>
-          <p class="mt-2 font-mono text-xs uppercase leading-relaxed tracking-[0.1em] text-ink">
-            Raw / Deep / Hypnotic<br />
-            Peak Time / Driving<br />
-            Minimal Techno
-          </p>
-        </div>
-        <div class="bg-base p-4 md:p-5">
-          <p class="font-mono text-xs uppercase tracking-[0.18em] text-muted">Series</p>
-          <a
-            href={SOUNDCLOUD_SERIES}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="mt-2 block font-mono text-xs uppercase leading-relaxed tracking-[0.1em] text-ink transition-colors hover:text-glow"
-          >
-            DARK &amp; LOVELY — 15 episodes
-            <span class="sr-only">(opens in a new tab)</span>
-          </a>
-        </div>
-        <div class="bg-base p-4 md:p-5">
-          <p class="font-mono text-xs uppercase tracking-[0.18em] text-muted">Based in</p>
-          <p class="mt-2 font-mono text-xs uppercase leading-relaxed tracking-[0.1em] text-ink">
-            Barcelona, Catalonia
-          </p>
         </div>
       </div>
     </div>
@@ -216,72 +173,79 @@ function appearanceWhen(date: string | undefined, type: string): string {
     <div class="mx-auto max-w-page px-4 md:px-8 lg:px-12">
       <div class="mb-8 border-b border-line pb-4">
         <p class="mb-1 font-mono text-xs uppercase tracking-[0.14em] text-glow">
-          Archive broadcasts // Sound repository
+          Recorded sets &amp; transmissions
         </p>
         <h2 class="font-display text-[40px] font-extrabold uppercase tracking-tight text-ink sm:text-[48px]">
-          Recorded sets &amp; transmissions
+          Music
         </h2>
       </div>
 
-      <div class="hidden border-b border-line-strong py-4 font-mono text-xs uppercase tracking-[0.14em] text-muted md:grid md:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)_9rem_6rem] md:gap-6">
+      <div class="hidden border-b border-line-strong py-4 font-mono text-xs uppercase tracking-[0.14em] text-muted md:grid md:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)_9rem_8rem] md:gap-6">
         <span>Set &amp; recording</span>
-        <span>Series / focus</span>
+        <span>Series</span>
         <span>Released</span>
         <span class="text-right">Listen</span>
       </div>
 
       <div class="border-t border-line-strong md:border-t-0">
         {
-          musicRows.map((entry, index) => (
-            <a
-              href={entry.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="group grid grid-cols-1 gap-2 border-b border-line py-5 pl-3 pr-2 transition-colors hover:border-glow hover:bg-panel/40 md:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)_9rem_6rem] md:items-center md:gap-6"
-            >
-              <div class="min-w-0">
-                <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                  {entry.kind === 'episode' ? (
-                    <span class="font-mono text-sm font-bold text-ink">
-                      {index === 0 && <span aria-hidden="true" class="mr-1 text-glow">●</span>}
-                      DARK &amp; LOVELY <span class="text-glow">#{entry.episode}</span>
-                    </span>
-                  ) : (
-                    <span class="font-mono text-sm font-bold text-ink">
-                      MAD COOL DJ TALENT 2026
-                    </span>
-                  )}
-                  {entry.kind === 'set' && (
-                    <span class="border border-glow px-1.5 py-0.5 font-mono text-xs uppercase tracking-[0.12em] text-glow">
-                      Top 50 finalist
-                    </span>
+          musicRows.map((entry) => {
+            const displayTitle = musicDisplayTitle(entry);
+            const secondaryTitle = musicSecondaryTitle(entry);
+            const links = musicPlatformLinks(entry);
+            const primaryHref = musicPrimaryHref(entry);
+
+            return (
+              <div class="grid grid-cols-1 gap-2 border-b border-line py-5 pl-3 pr-2 md:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)_9rem_8rem] md:items-center md:gap-6">
+                <div class="min-w-0">
+                  <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                    <span aria-hidden="true" class="text-glow">●</span>
+                    {primaryHref ? (
+                      <a
+                        href={primaryHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class:list={[
+                          'font-mono text-sm font-bold text-ink transition-colors hover:text-glow',
+                          entry.kind === 'episode' && 'whitespace-nowrap',
+                        ]}
+                      >
+                        {displayTitle}
+                        <span class="sr-only">(opens in a new tab)</span>
+                      </a>
+                    ) : (
+                      <span class:list={['font-mono text-sm font-bold text-ink', entry.kind === 'episode' && 'whitespace-nowrap']}>
+                        {displayTitle}
+                      </span>
+                    )}
+                  </div>
+                  {secondaryTitle && (
+                    <p class="mt-1 text-sm leading-snug text-body">{secondaryTitle}</p>
                   )}
                 </div>
-                <p class="mt-1 text-sm leading-snug text-body">{entry.title}</p>
-              </div>
-              <div>
                 <span class="font-mono text-xs uppercase tracking-[0.12em] text-muted">
-                  {entry.kind === 'episode' ? 'DARK & LOVELY' : 'Full set'}
+                  {entry.series}
                 </span>
-                <span class="mt-1 block font-mono text-xs uppercase tracking-[0.12em] text-muted">
-                  YouTube
+                <span class="font-mono text-xs uppercase tracking-[0.12em] text-muted">
+                  {formatDate(entry.published)}
                 </span>
+                <div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs uppercase tracking-[0.12em] md:flex-col md:items-end">
+                  {links.map((link) => (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex min-h-6 items-center gap-1 text-ink transition-colors hover:text-glow"
+                    >
+                      {link.label}
+                      <span aria-hidden="true">↗</span>
+                      <span class="sr-only">(opens in a new tab)</span>
+                    </a>
+                  ))}
+                </div>
               </div>
-              <span class="font-mono text-xs uppercase tracking-[0.12em] text-muted">
-                {formatDate(entry.published)}
-              </span>
-              <span class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-ink md:justify-end">
-                Watch
-                <span
-                  aria-hidden="true"
-                  class="text-glow transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                >
-                  ↗
-                </span>
-                <span class="sr-only">(opens in a new tab)</span>
-              </span>
-            </a>
-          ))
+            );
+          })
         }
       </div>
 
@@ -292,22 +256,23 @@ function appearanceWhen(date: string | undefined, type: string): string {
           rel="noopener noreferrer"
           class="inline-block border border-line-strong px-5 py-3 font-mono text-xs uppercase tracking-[0.14em] text-ink transition-colors hover:border-glow hover:text-glow"
         >
-          All 15 episodes on YouTube ↗
+          WATCH MORE ON YOUTUBE ↗
           <span class="sr-only">(opens in a new tab)</span>
         </a>
         <a
-          href={SOUNDCLOUD_SERIES}
+          href={SOUNDCLOUD_TRACKS}
           target="_blank"
           rel="noopener noreferrer"
           class="inline-block border border-line-strong px-5 py-3 font-mono text-xs uppercase tracking-[0.14em] text-body transition-colors hover:border-glow hover:text-glow"
         >
-          Listen on SoundCloud ↗
+          LISTEN MORE ON SOUNDCLOUD ↗
           <span class="sr-only">(opens in a new tab)</span>
         </a>
       </div>
     </div>
   </section>
 
+  {SHOW_TOUR_DATES && (
   <section id="tour-dates" class="scroll-mt-16 border-b border-line py-16">
     <div class="mx-auto max-w-page px-4 md:px-8 lg:px-12">
       <div class="mb-8 border-b border-line pb-4">
@@ -382,15 +347,16 @@ function appearanceWhen(date: string | undefined, type: string): string {
       </div>
     </div>
   </section>
+  )}
 
   <section id="booking" class="scroll-mt-16 py-20">
     <div class="mx-auto max-w-page px-4 md:px-8 lg:px-12">
       <div class="mb-12 border-b border-line pb-4">
         <p class="mb-1 font-mono text-xs uppercase tracking-[0.14em] text-glow">
-          Booking &amp; contact
+          Get in touch
         </p>
         <h2 class="font-display text-[40px] font-extrabold uppercase tracking-tight text-ink sm:text-[52px]">
-          Get in touch
+          Booking &amp; contact
         </h2>
       </div>
 

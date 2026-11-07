@@ -1,5 +1,5 @@
 ---
-import { NAV_LINKS, SITE } from '../data/site';
+import { SITE, VISIBLE_NAV_LINKS } from '../data/site';
 
 interface Props {
   current?: string;
@@ -8,6 +8,8 @@ interface Props {
 const { current = '/' } = Astro.props;
 const isActive = (href: string) =>
   href.startsWith('/press-kit') && current.startsWith('/press-kit');
+const bookingHref = '/#booking';
+const bookingNumber = String(VISIBLE_NAV_LINKS.length + 1).padStart(2, '0');
 ---
 
 <header class="sticky top-0 z-50 border-b border-line bg-base">
@@ -22,7 +24,7 @@ const isActive = (href: string) =>
 
     <nav class="ml-auto hidden items-center gap-7 md:flex" aria-label="Main navigation">
       {
-        NAV_LINKS.map((link) => (
+        VISIBLE_NAV_LINKS.map((link) => (
           <a
             href={link.href}
             class:list={[
@@ -36,7 +38,7 @@ const isActive = (href: string) =>
         ))
       }
       <a
-        href={`mailto:${SITE.email}`}
+        href={bookingHref}
         class="border border-line-strong px-4 py-2 font-mono text-xs font-bold uppercase tracking-[0.14em] text-ink transition-colors hover:border-glow hover:text-glow"
       >
         Booking
@@ -52,7 +54,7 @@ const isActive = (href: string) =>
       <div class="absolute inset-x-0 top-full border-b border-t border-line bg-base px-4 pb-6 pt-2 shadow-2xl">
         <nav aria-label="Mobile navigation">
           {
-            NAV_LINKS.map((link, index) => (
+            VISIBLE_NAV_LINKS.map((link, index) => (
               <a
                 href={link.href}
                 class="flex items-center justify-between border-b border-line py-4 font-mono text-sm uppercase tracking-[0.12em] text-ink"
@@ -68,11 +70,11 @@ const isActive = (href: string) =>
             ))
           }
           <a
-            href="/#booking"
+            href={bookingHref}
             class="flex items-center justify-between border-b border-line py-4 font-mono text-sm uppercase tracking-[0.12em] text-ink"
           >
             <span class="flex items-baseline gap-4">
-              <span class="text-xs text-muted">04</span>
+              <span class="text-xs text-muted">{bookingNumber}</span>
               Booking & contact
             </span>
             <span aria-hidden="true" class="text-glow">→</span>

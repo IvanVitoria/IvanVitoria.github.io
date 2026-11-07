@@ -32,7 +32,8 @@ All published facts live in `src/data/`:
 - `site.ts` — name, URL, description, email, city/region/country, update date,
   BPM, recognition, genre tags, bio, social profiles.
 - `appearances.ts` — verified past appearances and the recorded/private entries.
-- `music.ts` — the 15 DARK & LOVELY episodes and the Mad Cool full set.
+- `music.ts` — the DARK & LOVELY episodes, contest sets, radio/podcast features
+  and archive mixes, with YouTube and/or SoundCloud links.
 
 Pages, JSON-LD, the sitemap, `llms.txt` and `/index.md` + `/press-kit.md` render
 from those files. **Do not duplicate facts in templates.** Update the data, then
@@ -49,8 +50,16 @@ bump `SITE.updated`.
 - Five dated club appearances (Fluxs, Lab65 by ELEKTR’ÂME, Unplug, Absenta del
   Raval, Can Luis Ob Rem), the TechnoZulo recorded set, and the generic private
   events entry. No upcoming dates are announced.
+- The tour-dates section and its navigation entry are temporarily hidden by
+  `SHOW_TOUR_DATES = false` in `src/data/site.ts`. The appearance data, JSON-LD,
+  Markdown and `llms.txt` entries remain so the section can be restored by
+  flipping the flag.
 - DARK & LOVELY has 15 episodes. Episodes 10 and 11 were published out of numeric
   order; keep the real numbers and dates.
+- Music rows keep separate YouTube and SoundCloud links; do not make the whole
+  row clickable or replace the links with a generic “Watch” action. Series are
+  DARK & LOVELY Episodes, Contests, Radio & Podcasts and Mixes; third-party posts
+  stay Radio & Podcasts and link to the host.
 - `Oneira Party` and `Slow BCN` were private events. Do not add them as named
   public bookings; the existing private-events entry stays generic.
 - No photographer credits are published.

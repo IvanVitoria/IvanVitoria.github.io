@@ -1,6 +1,6 @@
 import { APPEARANCES } from '../data/appearances';
 import type { Appearance } from '../data/appearances';
-import { MUSIC } from '../data/music';
+import { MUSIC, musicDisplayTitle, musicPlatformLinks, musicSecondaryTitle } from '../data/music';
 import type { MusicEntry } from '../data/music';
 
 const typeLabels = {
@@ -10,14 +10,16 @@ const typeLabels = {
 } as const;
 
 export function musicLine(entry: MusicEntry): string {
-  const title =
-    entry.kind === 'episode'
-      ? entry.title.startsWith('DARK & LOVELY')
-        ? `DARK & LOVELY #${entry.episode}`
-        : `DARK & LOVELY #${entry.episode} — ${entry.title}`
-      : entry.title;
+  const secondary = musicSecondaryTitle(entry);
+  const title = secondary
+    ? `${musicDisplayTitle(entry)}: ${secondary}`
+    : musicDisplayTitle(entry);
+  const series = entry.kind === 'episode' ? '' : ` (${entry.series})`;
+  const links = musicPlatformLinks(entry)
+    .map((link) => `[${link.label}](${link.href})`)
+    .join(' · ');
 
-  return `- [${title}](${entry.href}) — ${entry.published}`;
+  return `- ${title}${series} — ${links} — ${entry.published}`;
 }
 
 export function musicMarkdown(): string {

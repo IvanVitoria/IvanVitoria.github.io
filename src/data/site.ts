@@ -9,7 +9,7 @@ export const SITE = {
   region: 'Catalonia',
   country: 'ES',
   locale: 'en_US',
-  updated: '2026-11-05',
+  updated: '2026-11-07',
   bpm: '138–148',
   recognition: 'Mad Cool DJ Talent 2026 — Top 50 finalist',
   genreTags: [
@@ -44,11 +44,6 @@ export const SITE = {
       icon: 'youtube',
     },
     {
-      label: 'Mavelpoint',
-      href: 'https://www.mavelpoint.com/artist/ivnv/overview',
-      icon: 'epk',
-    },
-    {
       label: 'ELEKTR’ÂME',
       href: 'https://www.elektr-ame.com/artist/9',
       icon: 'epk',
@@ -56,8 +51,13 @@ export const SITE = {
   ],
 } as const;
 
+// Flip to true to restore the tour-dates section and navigation entry.
+export const SHOW_TOUR_DATES = false;
+
 export const NAV_LINKS = [
-  { label: 'Music', href: '/#music' },
-  { label: 'Tour dates', href: '/#tour-dates' },
-  { label: 'Press kit', href: '/press-kit/' },
+  { label: 'Music', href: '/#music', show: true },
+  { label: 'Tour dates', href: '/#tour-dates', show: SHOW_TOUR_DATES },
+  { label: 'Press kit', href: '/press-kit/', show: true },
 ] as const;
+
+export const VISIBLE_NAV_LINKS = NAV_LINKS.filter((link) => link.show);

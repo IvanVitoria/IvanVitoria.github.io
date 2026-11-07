@@ -1,11 +1,11 @@
 import type { APIRoute } from 'astro';
 
-import { MUSIC, SOUNDCLOUD_SERIES, YOUTUBE_CHANNEL } from '../data/music';
+import { MAD_COOL_SET, MUSIC, SOUNDCLOUD_SERIES, YOUTUBE_CHANNEL } from '../data/music';
 import { SITE } from '../data/site';
 import { appearancesMarkdown } from '../lib/markdown';
 
 const episodeCount = MUSIC.filter((entry) => entry.kind === 'episode').length;
-const fullSet = MUSIC.find((entry) => entry.kind === 'set');
+const fullSet = MAD_COOL_SET;
 
 export const GET: APIRoute = () => {
   const bio = SITE.bio.map((paragraph) => `- ${paragraph}`).join('\n');
@@ -40,12 +40,13 @@ ${genres}
 
 ${bio}
 
-## Recorded sets: DARK & LOVELY
+## Recorded sets and features
 
 - DARK & LOVELY is IVNV's recorded-set series.
-- ${episodeCount} episodes are published on YouTube: ${YOUTUBE_CHANNEL}
+- ${episodeCount} episodes are published on YouTube and SoundCloud: ${YOUTUBE_CHANNEL}
 - SoundCloud playlist: ${SOUNDCLOUD_SERIES}
-${fullSet ? `- ${fullSet.title}: ${fullSet.href}` : ''}
+- Contest sets and radio/podcast features are also published on SoundCloud; the site labels every entry by series.
+${fullSet ? `- ${fullSet.title}: ${fullSet.links.youtube ?? fullSet.links.soundcloud ?? YOUTUBE_CHANNEL}` : ''}
 
 ## Recognition
 
@@ -61,7 +62,7 @@ ${appearances}
 
 - Canonical EPK: ${SITE.url}/press-kit/
 - The press kit includes bio, genres, BPM, recognition, the full recorded archive, contact and a live press photo.
-- Mavelpoint remains an official profile, but the canonical EPK is the site's own press kit.
+- The site's own press kit is the canonical source for bio, facts and contact.
 
 ## Booking and contact
 

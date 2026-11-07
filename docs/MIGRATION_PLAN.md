@@ -18,7 +18,7 @@
 | Language | English only, no language switcher |
 | Music | HTML ledger linking out to SoundCloud/YouTube, no iframe |
 | Facts | Verified only; all Stitch placeholder facts removed |
-| Press kit | Own `/press-kit/` replaces Mavelpoint as the EPK; Mavelpoint stays an official profile |
+| Press kit | Own `/press-kit/` is the canonical EPK |
 | Contact | `contact@ivnvmusic.com` only |
 | Visual direction | Match the Stitch mockups; `DESIGN.md` rewritten to match the built site |
 | Labels | 12px minimum for mono/UI labels |
@@ -86,17 +86,17 @@ All published facts live in `src/data/`. Pages, JSON-LD, sitemap and `llms.txt` 
   - https://soundcloud.com/ivnv_music
   - https://www.instagram.com/ivnv_music/
   - https://youtube.com/@ivnv_music
-  - https://www.mavelpoint.com/artist/ivnv/overview
   - https://www.elektr-ame.com/artist/9
 
-### Music source data (official YouTube channel)
+### Music source data (official YouTube and SoundCloud)
 
 Channel: https://www.youtube.com/@ivnv_music
+SoundCloud artist: https://soundcloud.com/ivnv_music
 SoundCloud playlist: https://soundcloud.com/ivnv_music/sets/dark-lovely-episodes
 
 | Published | Title | Link |
 |---|---|---|
-| 2026-10-06 | DARK & LOVELY #15 — Hypnotic, Groovy & Raw Techno (2+ Hours) | https://youtu.be/AQU4nSSr72A |
+| 2026-10-06 | DARK & LOVELY — Episode 15 — Hypnotic, Groovy & Raw Techno (2+ Hours) | https://youtu.be/AQU4nSSr72A |
 | 2026-08-30 | DARK & LOVELY — Episode 14 — Raw & hypnotic techno mix 2026 | https://youtu.be/FaDMr11b-3s |
 | 2026-08-29 | DARK & LOVELY — Episode 13 — Peak-time techno mix 2026 | https://youtu.be/9gi5_VTngn4 |
 | 2026-05-31 | DARK & LOVELY — Episode 12 — Hardgroove & hard techno mix 2026 | https://youtu.be/NZ5N96FXx_M |
@@ -117,8 +117,8 @@ SoundCloud playlist: https://soundcloud.com/ivnv_music/sets/dark-lovely-episodes
 Notes:
 
 - Episodes 10 and 11 were published out of numeric order. Keep the real dates; do not renumber.
-- The home ledger sorts by publish date. The press-kit archive can sort by episode number.
-- Only these verified entries go in the ledger. Do not invent SoundCloud-only tracks.
+- The home ledger and press-kit archive sort by publish date, newest first.
+- Only verified entries go in the ledger. SoundCloud-only tracks must be checked against the artist page before adding them.
 
 ### Photo assets received
 
@@ -174,8 +174,11 @@ AGENTS.md      rewritten for the Astro workflow
 - past events only
 
 `src/data/music.ts`
-- title, kind (`episode` / `set`), episode number, published date, link
-- only verified entries: the 15 DARK & LOVELY episodes and the Mad Cool full set
+- title, kind (`episode` / `contest` / `guest` / `mix`), series, episode number,
+  published date, YouTube and/or SoundCloud links
+- only verified entries: the 15 DARK & LOVELY episodes, the Mad Cool full set and
+  submission, the Maximum Heat 2026 HÖR contest, the ALTERA071 and Transmissions
+  presents IVNV #6 radio/podcast features, and three archive mixes
 
 `src/data/press.ts` — not implemented. The press-kit photo is imported directly
 from `src/assets/press/`; the rider is blocked on supplied data; photo downloads
@@ -187,10 +190,10 @@ and the full grid are deferred.
 
 ### Home
 
-1. Header: wordmark, MUSIC, TOUR DATES, PRESS KIT, BOOKING & CONTACT. No language switcher.
+1. Header: wordmark, MUSIC, PRESS KIT, BOOKING & CONTACT. No language switcher.
 2. Hero: H1 contains "IVNV" and "Techno DJ — Barcelona" so the keyword is in the H1, not only the title tag.
 3. Verified bio, Mad Cool DJ Talent 2026 Top 50 finalist credential and primary CTAs.
-4. Music ledger: the latest six entries (DARK & LOVELY #15–#12, the Mad Cool full set and #10), linking out. No iframe. TechnoZulo is in the appearances list, not the music ledger.
+4. Music ledger: the latest ten entries by release date (Episodes 15-13, ALTERA071, Episode 12, the Mad Cool full set, Episode 10, Transmissions presents IVNV #6, Episode 11 and the HÖR Maximum Heat contest), with separate YouTube/SoundCloud links. No iframe. TechnoZulo is in the appearances list, not the music ledger.
 5. Selected appearances: the five dated venues, TechnoZulo and private events.
 6. Booking and contact: email, social links.
 7. Footer.
@@ -199,9 +202,9 @@ and the full grid are deferred.
 
 1. Fact card: DJ, Barcelona, genre tags, BPM 138–148, full bio, booking CTA.
    The copy-bio button is not implemented yet.
-2. Music: the HTML page includes the complete 15-episode DARK & LOVELY archive
-   plus the Mad Cool set, linking out to YouTube and SoundCloud. `/press-kit.md`
-   carries the same archive.
+2. Music: the HTML page includes the complete archive — 15 DARK & LOVELY
+   episodes plus contest, radio/podcast and mix entries — linking out to YouTube
+   and/or SoundCloud. `/press-kit.md` carries the same archive.
 3. Photos: one live press photo. The real grid, lightbox and download links are
    deferred.
 4. Technical rider: blocked on supplied data.
