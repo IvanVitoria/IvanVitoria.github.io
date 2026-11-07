@@ -1,15 +1,16 @@
 ---
-import { SITE, VISIBLE_NAV_LINKS } from '../data/site';
+import { VISIBLE_NAV_LINKS } from '../data/site';
 
 interface Props {
   current?: string;
 }
 
 const { current = '/' } = Astro.props;
+const navItems = [{ label: 'IVNV', href: '/' }, ...VISIBLE_NAV_LINKS];
 const isActive = (href: string) =>
-  href.startsWith('/press-kit') && current.startsWith('/press-kit');
+  (href === '/' && current === '/') ||
+  (href.startsWith('/press-kit') && current.startsWith('/press-kit'));
 const bookingHref = '/#booking';
-const bookingNumber = String(VISIBLE_NAV_LINKS.length + 1).padStart(2, '0');
 ---
 
 <header class="sticky top-0 z-50 border-b border-line bg-base">
@@ -24,7 +25,7 @@ const bookingNumber = String(VISIBLE_NAV_LINKS.length + 1).padStart(2, '0');
 
     <nav class="ml-auto hidden items-center gap-7 md:flex" aria-label="Main navigation">
       {
-        VISIBLE_NAV_LINKS.map((link) => (
+        navItems.map((link) => (
           <a
             href={link.href}
             class:list={[
@@ -54,15 +55,12 @@ const bookingNumber = String(VISIBLE_NAV_LINKS.length + 1).padStart(2, '0');
       <div class="absolute inset-x-0 top-full border-b border-t border-line bg-base px-4 pb-6 pt-2 shadow-2xl">
         <nav aria-label="Mobile navigation">
           {
-            VISIBLE_NAV_LINKS.map((link, index) => (
+            navItems.map((link) => (
               <a
                 href={link.href}
                 class="flex items-center justify-between border-b border-line py-4 font-mono text-sm uppercase tracking-[0.12em] text-ink"
               >
-                <span class="flex items-baseline gap-4">
-                  <span class="text-xs text-muted">{String(index + 1).padStart(2, '0')}</span>
-                  {link.label}
-                </span>
+                <span>{link.label}</span>
                 <span aria-hidden="true" class="text-glow">
                   →
                 </span>
@@ -73,19 +71,10 @@ const bookingNumber = String(VISIBLE_NAV_LINKS.length + 1).padStart(2, '0');
             href={bookingHref}
             class="flex items-center justify-between border-b border-line py-4 font-mono text-sm uppercase tracking-[0.12em] text-ink"
           >
-            <span class="flex items-baseline gap-4">
-              <span class="text-xs text-muted">{bookingNumber}</span>
-              Booking & contact
-            </span>
+            <span>Booking & contact</span>
             <span aria-hidden="true" class="text-glow">→</span>
           </a>
         </nav>
-        <a
-          href={`mailto:${SITE.email}`}
-          class="mt-6 inline-block font-mono text-xs uppercase tracking-[0.12em] text-glow underline decoration-line-strong underline-offset-4"
-        >
-          {SITE.email}
-        </a>
       </div>
     </details>
   </div>

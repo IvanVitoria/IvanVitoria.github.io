@@ -87,7 +87,7 @@ public/               CNAME, robots.txt, .nojekyll, favicon, OG images, js/menu.
 - Fonts are self-hosted with `@fontsource-variable` (Anybody, Inter, JetBrains
   Mono). Do not add Google Fonts or a CDN.
 - Custom JS is limited to two external files (`public/js/menu.js` for the mobile
-  menu and `public/js/press-carousel.js` for the press-photo carousel), loaded
+  menu and `public/js/press-carousel.js` for the press-photo lightbox), loaded
   externally so the production CSP can stay strict.
 - Production pages carry a meta CSP. The inline JSON-LD script is allowed by a
   SHA-256 hash computed in `BaseLayout.astro`; do not add unhashed inline scripts.

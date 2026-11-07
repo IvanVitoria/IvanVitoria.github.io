@@ -157,8 +157,8 @@ AGENTS.md      rewritten for the Astro workflow
 ```
 
 - No React/Vue/Svelte islands.
-- Two small external scripts: the mobile menu and the press gallery (scroll-snap
-  carousel + lightbox). No copy button yet.
+- Two small external scripts: the mobile menu and the press gallery (lightbox).
+  No copy button yet.
 - Fonts self-hosted with `@fontsource-variable`: Anybody, Inter, JetBrains Mono.
 - Node 24. Scripts: `dev`, `build`, `preview`, `check`.
 
@@ -207,8 +207,8 @@ AGENTS.md      rewritten for the Astro workflow
 2. Music: a curated five-item selection (the `featured` flag on
    `src/data/music.ts`), linking out to YouTube and/or SoundCloud. `/press-kit.md`
    carries the same selection.
-3. Photos: a five-photo press gallery — scroll-snap carousel with prev/next, shot
-   labels, a counter and a fullscreen lightbox. Download links are deferred.
+3. Photos: a 12-photo press gallery — a responsive grid of shot cards (caption +
+   counter) with a fullscreen lightbox. Download links are deferred.
 4. Technical rider: DJ mixer, players and monitoring specs.
 5. Official profiles (socials).
 6. Footer.
@@ -341,7 +341,7 @@ If a contact form is added later, use a third-party form endpoint. Do not add a 
 | 1 | Scaffold Astro/Tailwind, tokens, fonts, base layout, SEO component; tag `pre-astro` on main | scaffold done; `pre-astro` tag created locally; push at cutover |
 | 2 | Data layer, bios, JSON-LD, `llms.txt` generator | done |
 | 3 | Home page, responsive, empty states | done |
-| 4 | Press kit, photos, lightbox, copy button, rider | dossier, curated music selection, photo carousel + lightbox and rider done; copy button pending |
+| 4 | Press kit, photos, lightbox, copy button, rider | dossier, curated music selection, photo gallery + lightbox and rider done; copy button pending |
 | 5 | Sitemap, robots, Markdown endpoints, OG images, 404 | done |
 | 6 | QA: build, Lighthouse, schema, OG debuggers, links, keyboard, 375/768/1440 | build, mobile Lighthouse 100/100/100/100, responsive 390/768/1400, keyboard/menu and link checks done; live OG debuggers and post-deploy checks pending |
 | 7 | Cutover: switch Pages source to GitHub Actions, merge, verify domain/HTTPS/canonical/sitemap, submit Search Console | pending |
@@ -379,7 +379,7 @@ No CMS, database, server, forms, auth, comments, i18n, analytics, React/Vue/Svel
 
 1. **Technical rider** — done. Mixer, players and monitoring specs now live in
    `src/data/press.ts`.
-2. **Press kit download packages / copy button** — deferred. The five-photo gallery
+2. **Press kit download packages / copy button** — deferred. The photo gallery
    + lightbox and the full rider are in; no fake ZIP/download buttons.
 3. **Cutover** — push the existing `pre-astro` tag, merge to `main`, switch Pages to
    GitHub Actions, verify the live routes and custom domain, submit the sitemap to

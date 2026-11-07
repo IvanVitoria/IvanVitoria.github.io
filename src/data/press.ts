@@ -35,6 +35,41 @@ export const PRESS_PHOTOS: PressPhoto[] = [
     alt: 'IVNV at a private party',
     caption: 'Private party',
   },
+  {
+    id: 'recording',
+    alt: 'Recording session',
+    caption: 'Recording',
+  },
+  {
+    id: 'bridge',
+    alt: 'Bridge',
+    caption: 'Bridge',
+  },
+  {
+    id: 'electric-power-plant',
+    alt: 'Electric power plant',
+    caption: 'Electric power plant',
+  },
+  {
+    id: 'port',
+    alt: 'Port',
+    caption: 'Port',
+  },
+  {
+    id: 'road',
+    alt: 'Road',
+    caption: 'Road',
+  },
+  {
+    id: 'profile',
+    alt: 'Profile portrait',
+    caption: 'Profile',
+  },
+  {
+    id: 'profile-2',
+    alt: 'Profile portrait',
+    caption: 'Profile II',
+  },
 ];
 
 export interface RiderItem {

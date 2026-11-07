@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import { getImage } from 'astro:assets';
 
-import heroImage from '../assets/press/slow-bcn.jpg';
+import heroImage from '../assets/press/ivnv-profile.png';
 import { MUSIC, SOUNDCLOUD_TRACKS, YOUTUBE_CHANNEL } from '../data/music';
 import { SITE } from '../data/site';
 import { appearancesMarkdown, musicMarkdown } from '../lib/markdown';
@@ -62,7 +62,7 @@ ${profiles}
 
 ## Image
 
-![IVNV performing live at a private party in Barcelona](${imageUrl})
+![Portrait of IVNV](${imageUrl})
 `;
 
   return new Response(body, {

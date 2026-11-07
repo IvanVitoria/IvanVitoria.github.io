@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 
-import heroImage from '../assets/press/slow-bcn.jpg';
+import heroImage from '../assets/press/ivnv-profile.png';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import MusicLedger from '../components/MusicLedger.astro';
 import { APPEARANCES } from '../data/appearances';
@@ -135,10 +135,10 @@ function appearanceWhen(date: string | undefined, type: string): string {
 
         <div class="mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none">
           <div class="border border-line-strong bg-base p-2">
-            <div class="relative aspect-[4/5] overflow-hidden bg-base">
+            <div class="relative aspect-[3/4] overflow-hidden bg-base">
               <Image
                 src={heroImage}
-                alt="IVNV performing live at a private party in Barcelona"
+                alt="Portrait of IVNV"
                 width={960}
                 widths={[480, 720, 960]}
                 sizes="(min-width: 1024px) 40vw, 100vw"
@@ -148,11 +148,6 @@ function appearanceWhen(date: string | undefined, type: string): string {
                 fetchpriority="high"
                 class="h-full w-full object-cover"
               />
-              <div
-                class="absolute inset-x-0 bottom-0 flex items-center border-t border-line-strong bg-base p-3 font-mono text-xs uppercase tracking-[0.12em]"
-              >
-                <span class="text-glow">IVNV // Private party, Barcelona</span>
-              </div>
             </div>
           </div>
         </div>

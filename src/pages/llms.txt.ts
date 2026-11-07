@@ -61,7 +61,7 @@ ${appearances}
 ## Press kit
 
 - Canonical EPK: ${SITE.url}/press-kit/
-- The press kit includes bio, genres, BPM, a curated music selection, official profiles, a five-photo gallery and a technical rider (DJ mixer, players and monitoring).
+- The press kit includes bio, genres, BPM, a curated music selection, official profiles, a photo gallery and a technical rider (DJ mixer, players and monitoring).
 - The site's own press kit is the canonical source for bio and essential facts.
 
 ## Booking and contact

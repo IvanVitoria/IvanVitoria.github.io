@@ -144,8 +144,8 @@ press kit. They share the same type, colour and spacing system.
   `line-strong` text.
 - Reduced motion: smooth scrolling and transitions collapse to ~0ms.
 - Native `<details>` provides keyboard and screen-reader behaviour; the external
-  `menu.js` only adds link-close and Escape. The press gallery is a scroll-snap
-  carousel plus a fullscreen lightbox, driven by `press-carousel.js`.
+  `menu.js` only adds link-close and Escape. The press gallery is a responsive
+  grid of shot cards plus a fullscreen lightbox, driven by `press-carousel.js`.
 - 404 page is `noindex, nofollow`.
 
 ## Content and empty states
@@ -158,7 +158,7 @@ press kit. They share the same type, colour and spacing system.
   Advisor, SoundCloud, Instagram and YouTube.
 - Only `contact@ivnvmusic.com` is published.
 - The press kit has four section groups: the artist dossier (facts + photo +
-  profiles), a curated music selection, a five-photo gallery with lightbox, and a
+  profiles), a curated music selection, a photo gallery with lightbox, and a
   technical-rider panel (DJ mixer, players, monitoring).
 - The full DARK & LOVELY archive is 15 episodes; the home ledger shows the latest
   ten music entries, and the press kit plus the Markdown endpoints carry a
@@ -172,7 +172,7 @@ press kit. They share the same type, colour and spacing system.
 - Header/nav: `src/components/Header.astro`
 - Footer: `src/components/Footer.astro`
 - Music ledger (shared): `src/components/MusicLedger.astro`
-- Photo carousel script: `public/js/press-carousel.js`
+- Photo lightbox script: `public/js/press-carousel.js`
 - Editorial home: `src/pages/index.astro`
 - Dossier press kit: `src/pages/press-kit/index.astro`
 - 404: `src/pages/404.astro`
