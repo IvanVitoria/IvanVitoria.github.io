@@ -1,12 +1,12 @@
 # ---------------------------------------------------------------------------
 # IVNV — ivnvmusic.com
 #
-# Static site served by GitHub Pages from the repo root. Nothing here is built
-# today; the Node/Astro blocks are here so the planned Astro port drops in
-# without a second round of gitignore churn.
+# Astro 7 + Tailwind 4 app under src/. `npm.cmd run build` writes dist/, which is
+# published by the GitHub Actions Pages workflow. The legacy root static site is
+# still live until the Pages source is switched; do not delete it before the
+# `pre-astro` tag exists.
 #
-# Do NOT add Jekyll entries (_site/, .jekyll-cache/, Gemfile.lock). The live
-# site is plain static — see AGENTS.md.
+# Do NOT add Jekyll entries (_site/, .jekyll-cache/, Gemfile.lock). See AGENTS.md.
 # ---------------------------------------------------------------------------
 
 # --- OS / file explorer ------------------------------------------------
@@ -44,7 +44,7 @@ $RECYCLE.BIN/
 .env.*
 !.env.example
 
-# --- Node / Astro (planned stack) -------------------------------------
+# --- Node / Astro -----------------------------------------------------
 node_modules/
 .npm/
 .yarn/

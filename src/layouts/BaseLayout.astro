@@ -1,0 +1,94 @@
+---
+import { createHash } from 'node:crypto';
+
+import '@fontsource-variable/anybody/wght.css';
+import '@fontsource-variable/inter';
+import '@fontsource-variable/jetbrains-mono';
+import '../styles/global.css';
+
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import SEO from '../components/SEO.astro';
+import { serializeJsonLd } from '../lib/jsonld';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  imageAlt?: string;
+  type?: 'website' | 'profile' | 'article';
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  markdown?: string;
+  current?: string;
+  canonical?: string;
+}
+
+const {
+  title,
+  description,
+  image,
+  imageAlt,
+  type,
+  noindex,
+  jsonLd,
+  markdown,
+  current = '/',
+  canonical,
+} = Astro.props;
+
+const jsonLdString = jsonLd ? serializeJsonLd(jsonLd) : null;
+const jsonLdHash = jsonLdString
+  ? `'sha256-${createHash('sha256').update(jsonLdString, 'utf8').digest('base64')}'`
+  : null;
+const isProd = import.meta.env.PROD;
+const csp = [
+  "default-src 'self'",
+  `script-src 'self'${jsonLdHash ? ` ${jsonLdHash}` : ''}`,
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data:",
+  "font-src 'self' data:",
+  "connect-src 'self'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  'upgrade-insecure-requests',
+].join('; ');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {isProd && <meta http-equiv="Content-Security-Policy" content={csp} />}
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <SEO
+      title={title}
+      description={description}
+      image={image}
+      imageAlt={imageAlt}
+      type={type}
+      noindex={noindex}
+      jsonLdString={jsonLdString}
+      markdown={markdown}
+      canonical={canonical}
+    />
+  </head>
+  <body class="min-h-screen bg-base font-body text-body antialiased">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-ink focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:font-bold focus:uppercase focus:tracking-widest focus:text-black"
+    >
+      Skip to content
+    </a>
+
+    <Header current={current} />
+
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>

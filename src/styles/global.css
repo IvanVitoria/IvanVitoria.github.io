@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@theme {
+  --color-base: #000000;
+  --color-panel: #1c0704;
+  --color-surface: #111111;
+  --color-surface-raised: #161616;
+  --color-line: #2c2c2c;
+  --color-line-strong: #595959;
+  --color-ink: #ffffff;
+  --color-body: #d6d6d6;
+  --color-muted: #9a9a9a;
+  --color-ember: #e8320f;
+  --color-glow: #ff6d11;
+
+  --font-display: "Anybody Variable", "Anybody", system-ui, sans-serif;
+  --font-body: "Inter Variable", "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, monospace;
+
+  --container-page: 1360px;
+  --radius-dossier: 0.75rem;
+}
+
+@layer base {
+  html {
+    background-color: var(--color-base);
+    color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-base);
+    color: var(--color-body);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--color-ember);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-glow);
+    outline-offset: 3px;
+  }
+
+  summary {
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
