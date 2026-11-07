@@ -22,8 +22,8 @@ export function musicLine(entry: MusicEntry): string {
   return `- ${title}${series} — ${links} — ${entry.published}`;
 }
 
-export function musicMarkdown(): string {
-  return MUSIC.map(musicLine).join('\n');
+export function musicMarkdown(entries: MusicEntry[] = MUSIC): string {
+  return entries.map(musicLine).join('\n');
 }
 
 export function appearanceLine(appearance: Appearance): string {

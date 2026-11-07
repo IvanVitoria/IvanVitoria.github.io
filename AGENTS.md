@@ -77,7 +77,8 @@ src/
   pages/              index.astro, press-kit/index.astro, 404.astro,
                       sitemap.xml.ts, llms.txt.ts, index.md.ts, press-kit.md.ts
   styles/             global.css (Tailwind @theme tokens + base)
-public/               CNAME, robots.txt, .nojekyll, favicon, OG images, js/menu.js
+public/               CNAME, robots.txt, .nojekyll, favicon, OG images, js/menu.js,
+                       js/press-carousel.js
 .github/              Pages deploy workflow + Dependabot
 ```
 
@@ -85,8 +86,9 @@ public/               CNAME, robots.txt, .nojekyll, favicon, OG images, js/menu.
   or analytics.
 - Fonts are self-hosted with `@fontsource-variable` (Anybody, Inter, JetBrains
   Mono). Do not add Google Fonts or a CDN.
-- The mobile menu is the only custom JS (`public/js/menu.js`, loaded externally
-  so the production CSP can stay strict).
+- Custom JS is limited to two external files (`public/js/menu.js` for the mobile
+  menu and `public/js/press-carousel.js` for the press-photo carousel), loaded
+  externally so the production CSP can stay strict.
 - Production pages carry a meta CSP. The inline JSON-LD script is allowed by a
   SHA-256 hash computed in `BaseLayout.astro`; do not add unhashed inline scripts.
 

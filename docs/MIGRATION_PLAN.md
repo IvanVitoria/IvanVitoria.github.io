@@ -144,11 +144,12 @@ src/
   data/        site.ts, appearances.ts, music.ts
   lib/         schema.ts, format.ts, jsonld.ts, markdown.ts
   layouts/     BaseLayout.astro
-  components/  SEO.astro, Header.astro, Footer.astro
+  components/  SEO.astro, Header.astro, Footer.astro, MusicLedger.astro
   pages/       index.astro, press-kit/index.astro, 404.astro,
                llms.txt.ts, index.md.ts, press-kit.md.ts, sitemap.xml.ts
   styles/      global.css
-public/        CNAME, robots.txt, .nojekyll, images/, favicon, js/menu.js
+public/        CNAME, robots.txt, .nojekyll, images/, favicon, js/menu.js,
+               js/press-carousel.js
 docs/          MIGRATION_PLAN.md, DEPLOYMENT.md
 DESIGN.md      implementation-accurate design system
 AGENTS.md      rewritten for the Astro workflow
@@ -156,7 +157,8 @@ AGENTS.md      rewritten for the Astro workflow
 ```
 
 - No React/Vue/Svelte islands.
-- One small external script for the mobile menu; no lightbox or copy button yet.
+- Two small external scripts: the mobile menu and the press gallery (scroll-snap
+  carousel + lightbox). No copy button yet.
 - Fonts self-hosted with `@fontsource-variable`: Anybody, Inter, JetBrains Mono.
 - Node 24. Scripts: `dev`, `build`, `preview`, `check`.
 
@@ -179,9 +181,10 @@ AGENTS.md      rewritten for the Astro workflow
   submission, the Maximum Heat 2026 HÖR contest, the ALTERA071 and Transmissions
   presents IVNV #6 radio/podcast features, and three archive mixes
 
-`src/data/press.ts` — not implemented. The press-kit photo is imported directly
-from `src/assets/press/`; the rider is blocked on supplied data; photo downloads
-and the full grid are deferred.
+`src/data/press.ts`
+- press photos (`PRESS_PHOTOS`: id, alt, published caption) for the gallery
+- technical rider (`TECH_RIDER`: DJ mixer, players, monitoring specs)
+- the press-kit hero photo is imported directly from `src/assets/press/`
 
 ---
 
@@ -201,13 +204,13 @@ and the full grid are deferred.
 
 1. Fact card: DJ, Barcelona, genre tags, BPM 138–148, full bio, booking CTA.
    The copy-bio button is not implemented yet.
-2. Music: the HTML page includes the complete archive — 15 DARK & LOVELY
-   episodes plus contest, radio/podcast and mix entries — linking out to YouTube
-   and/or SoundCloud. `/press-kit.md` carries the same archive.
-3. Photos: one live press photo. The real grid, lightbox and download links are
-   deferred.
-4. Technical rider: blocked on supplied data.
-5. Contact and socials.
+2. Music: a curated five-item selection (the `featured` flag on
+   `src/data/music.ts`), linking out to YouTube and/or SoundCloud. `/press-kit.md`
+   carries the same selection.
+3. Photos: a five-photo press gallery — scroll-snap carousel with prev/next, shot
+   labels, a counter and a fullscreen lightbox. Download links are deferred.
+4. Technical rider: DJ mixer, players and monitoring specs.
+5. Official profiles (socials).
 6. Footer.
 
 Empty states are deliberate: no upcoming dates, no fake ZIP download, no logo buttons.
@@ -272,7 +275,7 @@ These are functional or accessibility fixes, not aesthetic changes:
 
 ### Photography
 
-- Grid: grayscale and contrast treatment, matching the mockups.
+- Grid: photos shown in original colour.
 - Downloads: original colour files.
 - Press-kit OG: colour crop of `Unplug_dancefloor.jpg`, 1200×630.
 
@@ -334,11 +337,11 @@ If a contact form is added later, use a third-party form endpoint. Do not add a 
 
 | Phase | Work | Status |
 |---|---|---|
-| 0 | Final assets: technical rider | blocked — not received |
+| 0 | Final assets: technical rider | received |
 | 1 | Scaffold Astro/Tailwind, tokens, fonts, base layout, SEO component; tag `pre-astro` on main | scaffold done; `pre-astro` tag created locally; push at cutover |
 | 2 | Data layer, bios, JSON-LD, `llms.txt` generator | done |
 | 3 | Home page, responsive, empty states | done |
-| 4 | Press kit, photos, lightbox, copy button, rider | core dossier and full archive HTML done; photo grid/lightbox, copy button and rider pending |
+| 4 | Press kit, photos, lightbox, copy button, rider | dossier, curated music selection, photo carousel + lightbox and rider done; copy button pending |
 | 5 | Sitemap, robots, Markdown endpoints, OG images, 404 | done |
 | 6 | QA: build, Lighthouse, schema, OG debuggers, links, keyboard, 375/768/1440 | build, mobile Lighthouse 100/100/100/100, responsive 390/768/1400, keyboard/menu and link checks done; live OG debuggers and post-deploy checks pending |
 | 7 | Cutover: switch Pages source to GitHub Actions, merge, verify domain/HTTPS/canonical/sitemap, submit Search Console | pending |
@@ -374,10 +377,10 @@ No CMS, database, server, forms, auth, comments, i18n, analytics, React/Vue/Svel
 
 ## 12. Open items
 
-1. **Technical rider** — send as text or PDF. Not received yet.
-2. **Press kit downloads / photo grid / lightbox / copy button** — deferred. The
-   page currently has one press photo and a link to the contact address; no fake
-   downloads.
+1. **Technical rider** — done. Mixer, players and monitoring specs now live in
+   `src/data/press.ts`.
+2. **Press kit download packages / copy button** — deferred. The five-photo gallery
+   + lightbox and the full rider are in; no fake ZIP/download buttons.
 3. **Cutover** — push the existing `pre-astro` tag, merge to `main`, switch Pages to
    GitHub Actions, verify the live routes and custom domain, submit the sitemap to
    Search Console.

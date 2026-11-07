@@ -2,12 +2,20 @@ import type { APIRoute } from 'astro';
 import { getImage } from 'astro:assets';
 
 import pressPhoto from '../assets/press/unplug-dancefloor.jpg';
-import { MAD_COOL_SET, MUSIC, SOUNDCLOUD_SERIES, YOUTUBE_CHANNEL } from '../data/music';
+import { FEATURED_MUSIC, SOUNDCLOUD_TRACKS, YOUTUBE_CHANNEL } from '../data/music';
+import { PRESS_PHOTOS, TECH_RIDER } from '../data/press';
 import { SITE } from '../data/site';
 import { musicMarkdown } from '../lib/markdown';
 
-const episodeCount = MUSIC.filter((entry) => entry.kind === 'episode').length;
-const fullSet = MAD_COOL_SET;
+const riderMarkdown = TECH_RIDER.map((card) => {
+  const detail = card.items
+    ? card.items
+        .map((item) => `${item.name}${item.preferred ? ' (preferred)' : ''}`)
+        .join(', ')
+    : card.description;
+
+  return `- **${card.title.toUpperCase()}** — ${card.note.toUpperCase()}: ${detail}`;
+}).join('\n');
 
 export const GET: APIRoute = async () => {
   const image = await getImage({
@@ -42,27 +50,6 @@ ${SITE.genreTags.map((genre) => `- ${genre}`).join('\n')}
 
 ${SITE.bio.join('\n\n')}
 
-## Recognition
-
-- ${SITE.recognition}
-${fullSet ? `- Official full set: ${fullSet.links.youtube ?? fullSet.links.soundcloud ?? YOUTUBE_CHANNEL}` : ''}
-
-## Recorded sets and features
-
-- ${episodeCount} episodes are published on YouTube and SoundCloud.
-- Contest sets, radio/podcast features and archive mixes are listed below.
-
-${musicMarkdown()}
-
-- SoundCloud playlist: ${SOUNDCLOUD_SERIES}
-- YouTube channel: ${YOUTUBE_CHANNEL}
-
-## Booking and press contact
-
-- Email: ${SITE.email}
-- Website: ${SITE.url}/
-- Press kit: ${SITE.url}/press-kit/
-
 ## Official profiles
 
 ${profiles}
@@ -70,6 +57,21 @@ ${profiles}
 ## Press photo
 
 ![IVNV performing to a crowd at Unplug in Barcelona](${imageUrl})
+
+## Music
+
+${musicMarkdown(FEATURED_MUSIC)}
+
+- SoundCloud tracks: ${SOUNDCLOUD_TRACKS}
+- YouTube channel: ${YOUTUBE_CHANNEL}
+
+## Pictures
+
+${PRESS_PHOTOS.map((photo) => `- ${photo.caption}`).join('\n')}
+
+## Technical rider
+
+${riderMarkdown}
 `;
 
   return new Response(body, {

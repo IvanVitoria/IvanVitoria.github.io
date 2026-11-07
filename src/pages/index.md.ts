@@ -2,7 +2,7 @@ import type { APIRoute } from 'astro';
 import { getImage } from 'astro:assets';
 
 import heroImage from '../assets/press/slow-bcn.jpg';
-import { SOUNDCLOUD_SERIES, YOUTUBE_CHANNEL } from '../data/music';
+import { MUSIC, SOUNDCLOUD_TRACKS, YOUTUBE_CHANNEL } from '../data/music';
 import { SITE } from '../data/site';
 import { appearancesMarkdown, musicMarkdown } from '../lib/markdown';
 
@@ -39,9 +39,9 @@ ${SITE.genreTags.map((genre) => `- ${genre}`).join('\n')}
 
 ## Recorded sets and transmissions
 
-${musicMarkdown()}
+${musicMarkdown(MUSIC.slice(0, 10))}
 
-- SoundCloud playlist: ${SOUNDCLOUD_SERIES}
+- SoundCloud tracks: ${SOUNDCLOUD_TRACKS}
 - YouTube channel: ${YOUTUBE_CHANNEL}
 
 ## Selected appearances

@@ -25,17 +25,17 @@ press kit. They share the same type, colour and spacing system.
   used for separation from the page.
 - Asymmetric 12-column hero: 7 columns of type, 5 of image.
 - Music is a ledger, not a card grid: full-width rows with mono metadata.
-- Photos are grayscale with a slight contrast lift; no rounded corners.
+- Photos are shown in original colour; no rounded corners.
 
 ### Dossier — press kit
 
 - Radius: **12–16px** for cards and panels (`rounded-xl` = 12px,
-  `rounded-2xl` = 16px); **8px** for buttons and the photo caption
-  (`rounded-lg`).
+  `rounded-2xl` = 16px); **8px** for the photo caption (`rounded-lg`).
 - Subtle dark gradients: `from-surface-raised via-surface to-base`.
 - The photo caption uses `bg-base/80` + `backdrop-blur-sm`.
 - Same 12-column system, 6/6 split between the dossier card and the photo.
-- The dossier reads as a document: fact card, at-a-glance cards, contact panel.
+- The dossier card holds the artist facts (name, genres, BPM, full bio) with a
+  booking CTA; the right column holds the photo and official profiles.
 
 ## Colour
 
@@ -67,7 +67,7 @@ press kit. They share the same type, colour and spacing system.
 - Editorial H1: 84px mobile → 112px tablet → 132px desktop, `leading-[0.82]`,
   `tracking-[-0.03em]`, uppercase.
 - Editorial H2: 40px → 48px, uppercase, tight tracking.
-- Dossier H1: 36px → 48px. Dossier H2: 24px → 30px.
+- Dossier H1: 56px → 72px → 88px. Dossier H2 (Music): 40px → 48px.
 - Body: 14–17px with 1.6–1.65 line height.
 - Uppercase mono labels use 0.12–0.18em tracking; body text uses normal case.
 - Do not use all-caps for long copy.
@@ -83,7 +83,7 @@ press kit. They share the same type, colour and spacing system.
 - Appearances rows at `md`: `9rem / minmax(0,1fr) / auto`; stacked below. The
   section is hidden while `SHOW_TOUR_DATES` is false.
 - Booking: stacked below `lg`; 6/6 columns at `lg`.
-- Footer: single column below `sm`; three columns at `sm`+; brand block to the left
+- Footer: single column below `sm`; two columns at `sm`+; brand block to the left
   at `md`+.
 
 ## Components
@@ -102,13 +102,14 @@ press kit. They share the same type, colour and spacing system.
 
 - Editorial primary: white fill, black text, square, mono uppercase.
 - Editorial secondary: transparent, 1px `line-strong`, square.
-- Dossier primary: `glow` fill, black text, `rounded-lg`.
-- Dossier secondary: `surface-raised`, `line-strong`, `rounded-lg`.
 - Hover: border/text shifts to `glow`; no size or position jumps.
 - Booking CTAs scroll to the home page's `#booking` section; the email actions
   inside that section remain `mailto:` links.
 
 ### Music ledger
+
+- Rendered by `src/components/MusicLedger.astro`, shared by the home (latest 10
+  entries) and the press kit (a featured five, flagged on `src/data/music.ts`).
 
 - One row per recorded set; the row itself is not clickable.
 - An orange dot leads every row. The title is a link to the primary platform:
@@ -125,8 +126,7 @@ press kit. They share the same type, colour and spacing system.
 
 ### Photo frames
 
-- Editorial: 4:5 frame, 1px border, grayscale `contrast-125`, caption bar inside
-  the bottom edge.
+- Editorial: 4:5 frame, 1px border, caption bar inside the bottom edge.
 - Dossier: 4:3 frame, 12px radius, caption pill with blur.
 - Always set width/height or an aspect ratio; hero images are eager with
   `fetchpriority="high"`; below-fold images are lazy.
@@ -144,7 +144,8 @@ press kit. They share the same type, colour and spacing system.
   `line-strong` text.
 - Reduced motion: smooth scrolling and transitions collapse to ~0ms.
 - Native `<details>` provides keyboard and screen-reader behaviour; the external
-  `menu.js` only adds link-close and Escape.
+  `menu.js` only adds link-close and Escape. The press gallery is a scroll-snap
+  carousel plus a fullscreen lightbox, driven by `press-carousel.js`.
 - 404 page is `noindex, nofollow`.
 
 ## Content and empty states
@@ -156,9 +157,12 @@ press kit. They share the same type, colour and spacing system.
 - The press kit’s canonical EPK is `/press-kit/`; official profiles are Resident
   Advisor, SoundCloud, Instagram and YouTube.
 - Only `contact@ivnvmusic.com` is published.
+- The press kit has four section groups: the artist dossier (facts + photo +
+  profiles), a curated music selection, a five-photo gallery with lightbox, and a
+  technical-rider panel (DJ mixer, players, monitoring).
 - The full DARK & LOVELY archive is 15 episodes; the home ledger shows the latest
-  ten music entries, and the press kit plus the Markdown endpoints carry the
-  complete archive, including contest, radio/podcast and mix entries.
+  ten music entries, and the press kit plus the Markdown endpoints carry a
+  featured five (hand-picked via the `featured` flag).
 
 ## Implementation map
 
@@ -167,6 +171,8 @@ press kit. They share the same type, colour and spacing system.
 - Metadata, OG/Twitter, JSON-LD: `src/components/SEO.astro`
 - Header/nav: `src/components/Header.astro`
 - Footer: `src/components/Footer.astro`
+- Music ledger (shared): `src/components/MusicLedger.astro`
+- Photo carousel script: `public/js/press-carousel.js`
 - Editorial home: `src/pages/index.astro`
 - Dossier press kit: `src/pages/press-kit/index.astro`
 - 404: `src/pages/404.astro`

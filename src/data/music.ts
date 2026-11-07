@@ -19,6 +19,7 @@ export interface MusicEntry {
   kind: MusicKind;
   published: string;
   links: MusicLinks;
+  featured?: boolean;
 }
 
 export const SOUNDCLOUD_SERIES =
@@ -43,6 +44,7 @@ export const MUSIC: MusicEntry[] = [
     episode: 15,
     kind: 'episode',
     published: '2026-10-06',
+    featured: true,
     links: {
       youtube: 'https://youtu.be/AQU4nSSr72A',
       soundcloud:
@@ -56,6 +58,7 @@ export const MUSIC: MusicEntry[] = [
     episode: 14,
     kind: 'episode',
     published: '2026-08-30',
+    featured: true,
     links: {
       youtube: 'https://youtu.be/FaDMr11b-3s',
       soundcloud:
@@ -69,6 +72,7 @@ export const MUSIC: MusicEntry[] = [
     episode: 13,
     kind: 'episode',
     published: '2026-08-29',
+    featured: true,
     links: {
       youtube: 'https://youtu.be/9gi5_VTngn4',
       soundcloud:
@@ -81,6 +85,7 @@ export const MUSIC: MusicEntry[] = [
     series: 'Radio & Podcasts',
     kind: 'guest',
     published: '2026-06-03',
+    featured: true,
     links: {
       soundcloud: 'https://soundcloud.com/alteracollective/altera071-ivnv',
     },
@@ -104,6 +109,7 @@ export const MUSIC: MusicEntry[] = [
     series: 'Contests',
     kind: 'contest',
     published: '2026-05-19',
+    featured: true,
     links: {
       youtube: 'https://youtu.be/uyyL-7FP7y8',
       soundcloud:
@@ -310,6 +316,9 @@ export const MUSIC: MusicEntry[] = [
 ];
 
 export const MAD_COOL_SET = MUSIC.find((entry) => entry.id === 'uyyL-7FP7y8');
+
+/** Hand-picked EPK selection flagged on individual entries. */
+export const FEATURED_MUSIC = MUSIC.filter((entry) => entry.featured);
 
 export function musicDisplayTitle(entry: MusicEntry): string {
   return entry.kind === 'episode'

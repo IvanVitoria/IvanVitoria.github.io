@@ -14,7 +14,7 @@ Official website for **IVNV**, a techno DJ from Barcelona. Static site built wit
 - Astro 7, static output, no React/Vue/Svelte islands
 - Tailwind CSS 4 via `@tailwindcss/vite`
 - Self-hosted variable fonts via `@fontsource-variable`: Anybody, Inter, JetBrains Mono
-- One small external script for the mobile menu; no other custom JS
+- Two small external scripts (mobile menu, press-photo carousel); no other custom JS
 - No CMS, database, server, forms, cookies, analytics or third-party scripts
 
 ## Requirements
@@ -49,7 +49,8 @@ src/
   pages/              index.astro, press-kit/index.astro, 404.astro
                       sitemap.xml.ts, llms.txt.ts, index.md.ts, press-kit.md.ts
   styles/             global.css (Tailwind theme tokens + base styles)
-public/               CNAME, robots.txt, .nojekyll, favicon, OG images, js/menu.js
+public/               CNAME, robots.txt, .nojekyll, favicon, OG images, js/menu.js,
+                       js/press-carousel.js
 .github/              GitHub Actions deploy workflow + Dependabot
 docs/                 migration plan and deployment runbook
 ```
@@ -98,8 +99,9 @@ Content rules:
 
 - Static output only; no server-side runtime in production.
 - Production pages include a meta Content-Security-Policy. The JSON-LD inline
-  script is allowed by a SHA-256 hash computed at build time; the mobile menu is
-  an external file at `/js/menu.js`.
+  script is allowed by a SHA-256 hash computed at build time; the mobile menu and
+  the press-photo carousel are external files at `/js/menu.js` and
+  `/js/press-carousel.js`.
 - External links use `target="_blank"` with `rel="noopener noreferrer"` and a
   screen-reader new-tab hint.
 - No secrets, environment variables, analytics, cookies, iframes or third-party

@@ -3,17 +3,9 @@ import { Image } from 'astro:assets';
 
 import heroImage from '../assets/press/slow-bcn.jpg';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import MusicLedger from '../components/MusicLedger.astro';
 import { APPEARANCES } from '../data/appearances';
-import {
-  MAD_COOL_SET,
-  MUSIC,
-  SOUNDCLOUD_TRACKS,
-  YOUTUBE_CHANNEL,
-  musicDisplayTitle,
-  musicPlatformLinks,
-  musicPrimaryHref,
-  musicSecondaryTitle,
-} from '../data/music';
+import { MAD_COOL_SET, MUSIC, YOUTUBE_CHANNEL } from '../data/music';
 import { SHOW_TOUR_DATES, SITE } from '../data/site';
 import { formatDate } from '../lib/format';
 import {
@@ -154,7 +146,7 @@ function appearanceWhen(date: string | undefined, type: string): string {
                 quality={80}
                 loading="eager"
                 fetchpriority="high"
-                class="h-full w-full object-cover grayscale contrast-125"
+                class="h-full w-full object-cover"
               />
               <div
                 class="absolute inset-x-0 bottom-0 flex items-center border-t border-line-strong bg-base p-3 font-mono text-xs uppercase tracking-[0.12em]"
@@ -179,95 +171,8 @@ function appearanceWhen(date: string | undefined, type: string): string {
         </h2>
       </div>
 
-      <div class="hidden border-b border-line-strong py-4 font-mono text-xs uppercase tracking-[0.14em] text-muted md:grid md:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)_9rem_8rem] md:gap-6">
-        <span>Set &amp; recording</span>
-        <span>Series</span>
-        <span>Released</span>
-        <span class="text-right">Listen</span>
-      </div>
+      <MusicLedger entries={musicRows} />
 
-      <div class="border-t border-line-strong md:border-t-0">
-        {
-          musicRows.map((entry) => {
-            const displayTitle = musicDisplayTitle(entry);
-            const secondaryTitle = musicSecondaryTitle(entry);
-            const links = musicPlatformLinks(entry);
-            const primaryHref = musicPrimaryHref(entry);
-
-            return (
-              <div class="grid grid-cols-1 gap-2 border-b border-line py-5 pl-3 pr-2 md:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)_9rem_8rem] md:items-center md:gap-6">
-                <div class="min-w-0">
-                  <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                    <span aria-hidden="true" class="text-glow">●</span>
-                    {primaryHref ? (
-                      <a
-                        href={primaryHref}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class:list={[
-                          'font-mono text-sm font-bold text-ink transition-colors hover:text-glow',
-                          entry.kind === 'episode' && 'whitespace-nowrap',
-                        ]}
-                      >
-                        {displayTitle}
-                        <span class="sr-only">(opens in a new tab)</span>
-                      </a>
-                    ) : (
-                      <span class:list={['font-mono text-sm font-bold text-ink', entry.kind === 'episode' && 'whitespace-nowrap']}>
-                        {displayTitle}
-                      </span>
-                    )}
-                  </div>
-                  {secondaryTitle && (
-                    <p class="mt-1 text-sm leading-snug text-body">{secondaryTitle}</p>
-                  )}
-                </div>
-                <span class="font-mono text-xs uppercase tracking-[0.12em] text-muted">
-                  {entry.series}
-                </span>
-                <span class="font-mono text-xs uppercase tracking-[0.12em] text-muted">
-                  {formatDate(entry.published)}
-                </span>
-                <div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs uppercase tracking-[0.12em] md:flex-col md:items-end">
-                  {links.map((link) => (
-                    <a
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="inline-flex min-h-6 items-center gap-1 text-ink transition-colors hover:text-glow"
-                    >
-                      {link.label}
-                      <span aria-hidden="true" class="text-glow">↗</span>
-                      <span class="sr-only">(opens in a new tab)</span>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            );
-          })
-        }
-      </div>
-
-      <div class="mt-8 flex flex-wrap gap-3">
-        <a
-          href={YOUTUBE_CHANNEL}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-block border border-line-strong px-5 py-3 font-mono text-xs uppercase tracking-[0.14em] text-ink transition-colors hover:border-glow hover:text-glow"
-        >
-          WATCH MORE ON YOUTUBE <span class="text-glow">↗</span>
-          <span class="sr-only">(opens in a new tab)</span>
-        </a>
-        <a
-          href={SOUNDCLOUD_TRACKS}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-block border border-line-strong px-5 py-3 font-mono text-xs uppercase tracking-[0.14em] text-body transition-colors hover:border-glow hover:text-glow"
-        >
-          LISTEN MORE ON SOUNDCLOUD <span class="text-glow">↗</span>
-          <span class="sr-only">(opens in a new tab)</span>
-        </a>
-      </div>
     </div>
   </section>
 

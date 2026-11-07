@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 
-import { MAD_COOL_SET, MUSIC, SOUNDCLOUD_SERIES, YOUTUBE_CHANNEL } from '../data/music';
+import { MAD_COOL_SET, MUSIC, SOUNDCLOUD_TRACKS, YOUTUBE_CHANNEL } from '../data/music';
 import { SITE } from '../data/site';
 import { appearancesMarkdown } from '../lib/markdown';
 
@@ -44,7 +44,7 @@ ${bio}
 
 - DARK & LOVELY is IVNV's recorded-set series.
 - ${episodeCount} episodes are published on YouTube and SoundCloud: ${YOUTUBE_CHANNEL}
-- SoundCloud playlist: ${SOUNDCLOUD_SERIES}
+- All releases on SoundCloud: ${SOUNDCLOUD_TRACKS}
 - Contest sets and radio/podcast features are also published on SoundCloud; the site labels every entry by series.
 ${fullSet ? `- ${fullSet.title}: ${fullSet.links.youtube ?? fullSet.links.soundcloud ?? YOUTUBE_CHANNEL}` : ''}
 
@@ -61,8 +61,8 @@ ${appearances}
 ## Press kit
 
 - Canonical EPK: ${SITE.url}/press-kit/
-- The press kit includes bio, genres, BPM, recognition, the full recorded archive, contact and a live press photo.
-- The site's own press kit is the canonical source for bio, facts and contact.
+- The press kit includes bio, genres, BPM, a curated music selection, official profiles, a five-photo gallery and a technical rider (DJ mixer, players and monitoring).
+- The site's own press kit is the canonical source for bio and essential facts.
 
 ## Booking and contact
 
