@@ -154,7 +154,7 @@ press kit. They share the same type, colour and spacing system.
   AI/Markdown outputs remain.
 - No fake ZIP, rider, logo or photo-count claims.
 - The press kit’s canonical EPK is `/press-kit/`; official profiles are Resident
-  Advisor, SoundCloud, Instagram, YouTube and ELEKTR’ÂME.
+  Advisor, SoundCloud, Instagram and YouTube.
 - Only `contact@ivnvmusic.com` is published.
 - The full DARK & LOVELY archive is 15 episodes; the home ledger shows the latest
   ten music entries, and the press kit plus the Markdown endpoints carry the

@@ -43,11 +43,6 @@ export const SITE = {
       href: 'https://youtube.com/@ivnv_music',
       icon: 'youtube',
     },
-    {
-      label: 'ELEKTR’ÂME',
-      href: 'https://www.elektr-ame.com/artist/9',
-      icon: 'epk',
-    },
   ],
 } as const;
 

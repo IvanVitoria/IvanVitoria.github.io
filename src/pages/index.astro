@@ -120,7 +120,7 @@ function appearanceWhen(date: string | undefined, type: string): string {
             <div
               class="flex flex-col gap-3 font-mono text-xs uppercase tracking-[0.14em] sm:flex-row sm:items-center sm:justify-between"
             >
-              <span class="text-muted">Transmissions // platforms:</span>
+              <span class="text-muted">Platforms:</span>
               <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
                 {
                   heroProfiles.map((profile) => (
@@ -131,7 +131,7 @@ function appearanceWhen(date: string | undefined, type: string): string {
                       class="inline-flex items-center gap-1.5 text-body transition-colors hover:text-glow"
                     >
                       {profile.label}
-                      <span aria-hidden="true">↗</span>
+                      <span aria-hidden="true" class="text-glow">↗</span>
                       <span class="sr-only">(opens in a new tab)</span>
                     </a>
                   ))
@@ -157,10 +157,9 @@ function appearanceWhen(date: string | undefined, type: string): string {
                 class="h-full w-full object-cover grayscale contrast-125"
               />
               <div
-                class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-4 border-t border-line-strong bg-base p-3 font-mono text-xs uppercase tracking-[0.12em]"
+                class="absolute inset-x-0 bottom-0 flex items-center border-t border-line-strong bg-base p-3 font-mono text-xs uppercase tracking-[0.12em]"
               >
-                <span class="text-ink">IVNV // Private party, Barcelona</span>
-                <span class="shrink-0 text-glow">Raw archive</span>
+                <span class="text-glow">IVNV // Private party, Barcelona</span>
               </div>
             </div>
           </div>
@@ -238,7 +237,7 @@ function appearanceWhen(date: string | undefined, type: string): string {
                       class="inline-flex min-h-6 items-center gap-1 text-ink transition-colors hover:text-glow"
                     >
                       {link.label}
-                      <span aria-hidden="true">↗</span>
+                      <span aria-hidden="true" class="text-glow">↗</span>
                       <span class="sr-only">(opens in a new tab)</span>
                     </a>
                   ))}
@@ -256,7 +255,7 @@ function appearanceWhen(date: string | undefined, type: string): string {
           rel="noopener noreferrer"
           class="inline-block border border-line-strong px-5 py-3 font-mono text-xs uppercase tracking-[0.14em] text-ink transition-colors hover:border-glow hover:text-glow"
         >
-          WATCH MORE ON YOUTUBE ↗
+          WATCH MORE ON YOUTUBE <span class="text-glow">↗</span>
           <span class="sr-only">(opens in a new tab)</span>
         </a>
         <a
@@ -265,7 +264,7 @@ function appearanceWhen(date: string | undefined, type: string): string {
           rel="noopener noreferrer"
           class="inline-block border border-line-strong px-5 py-3 font-mono text-xs uppercase tracking-[0.14em] text-body transition-colors hover:border-glow hover:text-glow"
         >
-          LISTEN MORE ON SOUNDCLOUD ↗
+          LISTEN MORE ON SOUNDCLOUD <span class="text-glow">↗</span>
           <span class="sr-only">(opens in a new tab)</span>
         </a>
       </div>
@@ -333,7 +332,7 @@ function appearanceWhen(date: string | undefined, type: string): string {
                   class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-body transition-colors hover:text-glow md:justify-end"
                 >
                   Details
-                  <span aria-hidden="true">↗</span>
+                  <span aria-hidden="true" class="text-glow">↗</span>
                   <span class="sr-only">(opens in a new tab)</span>
                 </a>
               ) : (
@@ -372,8 +371,7 @@ function appearanceWhen(date: string | undefined, type: string): string {
             {SITE.email}
           </a>
           <p class="mb-8 max-w-md text-[15px] leading-[1.6] text-muted">
-            For club nights, private events and collaborations. Based in
-            Barcelona, Catalonia.
+            For club nights, private events and collaborations.
           </p>
           <a
             href={`mailto:${SITE.email}`}
@@ -415,18 +413,13 @@ function appearanceWhen(date: string | undefined, type: string): string {
             </div>
             <div>
               <p class="mb-4 font-mono text-xs uppercase tracking-[0.18em] text-muted">
-                Press kit
+                Electronic press kit
               </p>
               <a
                 href="/press-kit/"
-                class="group block border border-line-strong p-5 transition-colors hover:border-glow"
+                class="inline-block border border-ink px-5 py-3 font-mono text-xs uppercase tracking-[0.14em] text-ink transition-colors hover:border-glow hover:text-glow"
               >
-                <span class="font-mono text-xs uppercase tracking-[0.14em] text-muted">
-                  Electronic press kit
-                </span>
-                <span class="mt-2 block font-display text-2xl font-extrabold uppercase leading-tight text-ink group-hover:text-glow">
-                  Bio, facts &amp; contact →
-                </span>
+                Press kit (EPK) →
               </a>
             </div>
           </div>

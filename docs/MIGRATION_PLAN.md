@@ -86,7 +86,6 @@ All published facts live in `src/data/`. Pages, JSON-LD, sitemap and `llms.txt` 
   - https://soundcloud.com/ivnv_music
   - https://www.instagram.com/ivnv_music/
   - https://youtube.com/@ivnv_music
-  - https://www.elektr-ame.com/artist/9
 
 ### Music source data (official YouTube and SoundCloud)
 

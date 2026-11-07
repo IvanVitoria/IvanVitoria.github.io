@@ -21,7 +21,7 @@ const socialLinks = SITE.socials;
         </p>
       </div>
 
-      <div class="grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-3">
+      <div class="grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-2">
         <nav aria-label="Footer navigation">
           <p class="font-mono text-xs uppercase tracking-[0.18em] text-muted">Explore</p>
           <ul class="mt-4 space-y-3">
@@ -47,20 +47,6 @@ const socialLinks = SITE.socials;
             </li>
           </ul>
         </nav>
-
-        <div>
-          <p class="font-mono text-xs uppercase tracking-[0.18em] text-muted">Contact</p>
-          <ul class="mt-4 space-y-3">
-            <li>
-              <a
-                href={`mailto:${SITE.email}`}
-                class="font-mono text-xs tracking-[0.08em] text-glow underline decoration-line-strong underline-offset-4 hover:text-ink"
-              >
-                {SITE.email}
-              </a>
-            </li>
-          </ul>
-        </div>
 
         <div>
           <p class="font-mono text-xs uppercase tracking-[0.18em] text-muted">Profiles</p>
@@ -92,7 +78,6 @@ const socialLinks = SITE.socials;
       class="mt-10 flex flex-col gap-3 border-t border-line pt-6 font-mono text-xs uppercase tracking-[0.16em] text-muted sm:flex-row sm:items-center sm:justify-between"
     >
       <p>© {year} IVNV. All rights reserved.</p>
-      <p>Barcelona // Catalonia</p>
     </div>
   </div>
 </footer>
