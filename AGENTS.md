@@ -4,11 +4,10 @@ Official website for **IVNV**, a techno DJ from Barcelona. The production site i
 two-page **Astro 7 + Tailwind CSS 4** app under `src/`, deployed to GitHub Pages at
 **https://www.ivnvmusic.com**.
 
-> **Migration status (2026-11-05):** the Astro app is implemented and builds
-> cleanly on `new_website`. `main` still serves the legacy root-level static site
-> until the GitHub Pages source is switched to GitHub Actions. **Do not delete the
-> legacy files yet.** The legacy `main` is tagged `pre-astro` locally; push it at
-> cutover. See `docs/DEPLOYMENT.md`.
+> **Migration status (2026-11-12):** cutover is complete. GitHub Pages serves the
+> Astro build from GitHub Actions, and the legacy root-level static files have been
+> removed. The old site is preserved on the `pre-astro` tag only — keep that tag.
+> See `docs/DEPLOYMENT.md`.
 
 ## Commands
 
@@ -117,22 +116,15 @@ public/               CNAME, robots.txt, .nojekyll, favicon, OG images, js/menu.
 - External links use `target="_blank"` with `rel="noopener noreferrer"` and a
   screen-reader new-tab hint.
 
-## Legacy site (until cutover)
+## Legacy site (removed)
 
-The root `index.html`, `css/`, `js/`, `sass/`, `fonts/`, `images/`, `robots.txt`,
-`sitemap.xml`, `llms.txt` and `CNAME` are the live site on `main` until the Pages
-source is switched. Do not edit them for the new site and do not delete them
-before tagging `main` as `pre-astro`.
+The pre-Astro static site (`index.html`, `css/`, `js/`, `sass/`, `fonts/`,
+`images/`, and the root `robots.txt`, `sitemap.xml`, `llms.txt`, `CNAME`) has been
+deleted from the working tree. It is preserved only on the `pre-astro` tag — do
+not delete that tag, and do not re-add those files. Everything is generated from
+`src/` and `public/`.
 
-If you must touch the legacy files before cutover:
-
-- Custom CSS lives at the bottom of `css/style.css` (roughly line 1320+). Do not
-  recompile `sass/style.scss` over it; re-append the custom block if you do.
-- The social-icon rows and CONTACT / VIEW PRESS KIT blocks are duplicated twice in
-  `index.html`; update both.
 - Do not reintroduce Jekyll (`_config.yml`, Gemfile, `_posts`, etc.).
-- The root `llms.txt` describes the legacy single-page site. Do not update it with
-  new Astro facts; the generated `dist/llms.txt` replaces it at cutover.
 
 ## Validation
 

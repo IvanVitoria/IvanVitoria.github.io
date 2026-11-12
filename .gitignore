@@ -2,9 +2,8 @@
 # IVNV — ivnvmusic.com
 #
 # Astro 7 + Tailwind 4 app under src/. `npm.cmd run build` writes dist/, which is
-# published by the GitHub Actions Pages workflow. The legacy root static site is
-# still live until the Pages source is switched; do not delete it before the
-# `pre-astro` tag exists.
+# published by the GitHub Actions Pages workflow. The legacy root static site has
+# been removed; the old site lives on the `pre-astro` tag.
 #
 # Do NOT add Jekyll entries (_site/, .jekyll-cache/, Gemfile.lock). See AGENTS.md.
 # ---------------------------------------------------------------------------
