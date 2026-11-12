@@ -6,10 +6,11 @@ Build: Astro static output in `dist/`, deployed by
 
 ## Current state
 
-- `main` still serves the legacy root-level static site.
-- The Astro app is on `new_website` and builds cleanly.
-- The Pages source has **not** been switched to GitHub Actions yet.
-- Do not delete the legacy files until the first successful Actions deploy.
+- `main` serves the Astro build via GitHub Actions (cutover complete).
+- The Pages source is **GitHub Actions**.
+- The legacy root-level static files have been removed; they live on the
+  `pre-astro` tag only.
+- Keep the `pre-astro` tag permanently as the rollback point.
 
 ## Preconditions
 
@@ -28,7 +29,9 @@ npm.cmd run preview
 
 `npm.cmd run build` must finish with 0 errors, 0 warnings, 0 hints.
 
-## Cutover
+## Cutover (completed 2026-11-12)
+
+The steps below document how the cutover was performed; keep them for reference.
 
 1. **Push the rollback tag.** The annotated `pre-astro` tag was created locally on
    the legacy `main`:
@@ -96,8 +99,8 @@ Also check:
 
 ## Rollback
 
-The old site is recoverable from the `pre-astro` tag and, until it is removed, the
-legacy root files.
+The old site is recoverable from the `pre-astro` tag only (the legacy root files
+have been removed from the working tree).
 
 1. Revert the merge commit on `main`, or restore the legacy files from the tag:
 
@@ -117,15 +120,21 @@ The `pre-astro` tag is the reliable rollback. Do not delete it.
 
 ## Cleanup after the new site is stable
 
-After the new site has been live for a few days and verified:
+**Done (2026-11-12).** The legacy root files were removed after the Actions deploy
+was verified live:
 
-1. Remove the legacy root files: `index.html`, `css/`, `js/`, `sass/`, `fonts/`,
-   `images/`, `robots.txt`, `sitemap.xml`, `llms.txt`, `CNAME`.
-2. Keep `src/`, `public/`, `docs/`, `AGENTS.md`, `DESIGN.md`, the Astro config,
+1. Removed `index.html`, `css/`, `js/`, `sass/`, `fonts/`, `images/`, and the root
+   `robots.txt`, `sitemap.xml`, `llms.txt`, `CNAME`.
+2. Kept `src/`, `public/`, `docs/`, `AGENTS.md`, `DESIGN.md`, the Astro config,
    package files and `.github/`.
-3. Remove the migration notice from `AGENTS.md` and update the status in this
-   document.
-4. Leave the `pre-astro` tag in place.
+3. Updated the migration notices in `AGENTS.md`, `README.md` and this document.
+4. Kept the `pre-astro` tag in place.
+
+If the legacy files are ever needed again, restore them from the tag:
+
+```powershell
+git checkout pre-astro -- index.html css js sass fonts images robots.txt sitemap.xml llms.txt CNAME
+```
 
 ## Security notes
 

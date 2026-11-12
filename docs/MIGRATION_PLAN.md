@@ -1,7 +1,7 @@
 # IVNV website migration plan
 
-**Status:** Phases 1–5 implemented on `new_website`; QA and cutover pending
-**Date:** 2026-11-05
+**Status:** cutover complete (2026-11-12); the Astro site is live and the legacy files are removed
+**Date:** 2026-11-05 (updated 2026-11-12)
 **Target:** replace the current static one-pager with a two-page Astro site on GitHub Pages
 **Branch:** `new_website`
 
@@ -338,22 +338,22 @@ If a contact form is added later, use a third-party form endpoint. Do not add a 
 | Phase | Work | Status |
 |---|---|---|
 | 0 | Final assets: technical rider | received |
-| 1 | Scaffold Astro/Tailwind, tokens, fonts, base layout, SEO component; tag `pre-astro` on main | scaffold done; `pre-astro` tag created locally; push at cutover |
+| 1 | Scaffold Astro/Tailwind, tokens, fonts, base layout, SEO component; tag `pre-astro` on main | done; `pre-astro` tag kept for rollback |
 | 2 | Data layer, bios, JSON-LD, `llms.txt` generator | done |
 | 3 | Home page, responsive, empty states | done |
 | 4 | Press kit, photos, lightbox, copy button, rider | dossier, curated music selection, photo gallery + lightbox and rider done; copy button pending |
 | 5 | Sitemap, robots, Markdown endpoints, OG images, 404 | done |
-| 6 | QA: build, Lighthouse, schema, OG debuggers, links, keyboard, 375/768/1440 | build, mobile Lighthouse 100/100/100/100, responsive 390/768/1400, keyboard/menu and link checks done; live OG debuggers and post-deploy checks pending |
-| 7 | Cutover: switch Pages source to GitHub Actions, merge, verify domain/HTTPS/canonical/sitemap, submit Search Console | pending |
+| 6 | QA: build, Lighthouse, schema, OG debuggers, links, keyboard, 375/768/1440 | build, mobile Lighthouse 100/100/100/100, responsive 390/768/1400, keyboard/menu and link checks done; live pages verified post-deploy |
+| 7 | Cutover: switch Pages source to GitHub Actions, merge, verify domain/HTTPS/canonical/sitemap, submit Search Console | done 2026-11-12 |
 
-### Cutover notes
+### Cutover notes (done)
 
-1. Push the existing `pre-astro` tag (created locally on the legacy `main`) for rollback. If it does not exist, create it first.
-2. Switch **Settings → Pages → Source** to **GitHub Actions** before or immediately after merging the Astro work.
-3. The current site stays live until the new deploy succeeds.
-4. Keep a branch pointing at the old static site until the new site has been live for a few days.
-5. Verify `/`, `/press-kit/`, `robots.txt`, `sitemap.xml`, `llms.txt`, `index.md`, `press-kit.md` and a 404.
-6. Check `www` and apex redirects, HTTPS, canonical URLs and OG unfurls.
+1. Pushed the `pre-astro` tag (kept permanently for rollback).
+2. Switched **Settings → Pages → Source** to **GitHub Actions**.
+3. Merged the Astro work; the deploy succeeded.
+4. Verified `/`, `/press-kit/`, `robots.txt`, `sitemap.xml`, `llms.txt`, `index.md`, `press-kit.md` and a 404.
+5. Checked `www` and apex redirects, HTTPS, canonical URLs and OG unfurls.
+6. Removed the legacy root files once the new site was verified live.
 
 ---
 
@@ -381,9 +381,8 @@ No CMS, database, server, forms, auth, comments, i18n, analytics, React/Vue/Svel
    `src/data/press.ts`.
 2. **Press kit download packages / copy button** — deferred. The photo gallery
    + lightbox and the full rider are in; no fake ZIP/download buttons.
-3. **Cutover** — push the existing `pre-astro` tag, merge to `main`, switch Pages to
-   GitHub Actions, verify the live routes and custom domain, submit the sitemap to
-   Search Console.
+3. **Cutover** — done. The site is live on GitHub Actions; the legacy root files
+   were removed and the old site is preserved on the `pre-astro` tag.
 4. **Post-deploy performance check** — re-run Lighthouse against the live domain.
    The local simulated mobile run is 100 performance / 100 accessibility / 100
    best practices / 100 SEO.

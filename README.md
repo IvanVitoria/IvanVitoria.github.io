@@ -4,10 +4,9 @@ Official website for **IVNV**, a techno DJ from Barcelona. Static site built wit
 **Astro 7** and **Tailwind CSS 4**, deployed to GitHub Pages at
 **https://www.ivnvmusic.com**.
 
-> **Migration status:** the Astro app under `src/` is complete, but `main` still
-> serves the legacy root-level static site until the GitHub Pages source is
-> switched to GitHub Actions. See `docs/DEPLOYMENT.md`. Do not delete the legacy
-> files before the cutover.
+> **Migration status:** complete. GitHub Pages serves the Astro build from GitHub
+> Actions, and the legacy root-level static files have been removed. The old site
+> is preserved on the `pre-astro` tag only. See `docs/DEPLOYMENT.md`.
 
 ## Stack
 
@@ -111,19 +110,16 @@ Content rules:
 ## Deployment
 
 The deploy workflow is `.github/workflows/deploy.yml`. It builds `dist/` and
-publishes it with GitHub Pages. The repository's Pages source must be set to
-**GitHub Actions** at cutover; the custom domain and HTTPS stay on
-`www.ivnvmusic.com`.
+publishes it with GitHub Pages. The repository's Pages source is **GitHub
+Actions**, and the custom domain and HTTPS stay on `www.ivnvmusic.com`.
 
 Full runbook, including rollback: [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
 
-## Legacy site
+## Rollback
 
-Until the cutover, the live site is still the legacy static files at the repo
-root: `index.html`, `css/`, `js/`, `sass/`, `fonts/`, `images/`, `robots.txt`,
-`sitemap.xml`, `llms.txt` and `CNAME`. They are kept intentionally for rollback
-and must not be edited for the new site. Tag `main` as `pre-astro` before
-removing them.
+The pre-Astro site no longer exists in the working tree; it lives on the
+`pre-astro` tag. Keep that tag and restore from it if you ever need to go back
+(see `docs/DEPLOYMENT.md`).
 
 ## Contact
 
