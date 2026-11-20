@@ -1,18 +1,18 @@
 import type { APIRoute } from 'astro';
 
-import { SITE } from '../data/site';
+import { PAGE_UPDATED, SITE } from '../data/site';
 
 const pages = [
   { path: '/', priority: '1.0' },
   { path: '/press-kit/', priority: '0.8' },
-];
+] as const;
 
 export const GET: APIRoute = () => {
   const urls = pages
     .map(
       (page) => `  <url>
     <loc>${SITE.url}${page.path}</loc>
-    <lastmod>${SITE.updated}</lastmod>
+    <lastmod>${PAGE_UPDATED[page.path]}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>${page.priority}</priority>
   </url>`,
