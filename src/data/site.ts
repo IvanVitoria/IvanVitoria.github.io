@@ -9,7 +9,7 @@ export const SITE = {
   region: 'Catalonia',
   country: 'ES',
   locale: 'en_US',
-  updated: '2026-11-07',
+  updated: '2026-11-20',
   bpm: '138–148',
   recognition: 'Mad Cool DJ Talent 2026 — Top 50 finalist',
   genreTags: [
@@ -44,6 +44,17 @@ export const SITE = {
       icon: 'youtube',
     },
   ],
+} as const;
+
+/**
+ * Per-page `<lastmod>` for the sitemap. A sitemap only signals freshness when
+ * the date tracks the page that changed, so bump the entry for a page when its
+ * content changes and leave the others alone. `SITE.updated` stays the
+ * site-wide date used by `llms.txt` and the Markdown versions.
+ */
+export const PAGE_UPDATED = {
+  '/': '2026-11-20',
+  '/press-kit/': '2026-11-20',
 } as const;
 
 // Flip to true to restore the tour-dates section and navigation entry.
