@@ -19,10 +19,24 @@ npm.cmd run dev
 npm.cmd run build      # astro check && astro build → dist/
 npm.cmd run preview
 npm.cmd run check
+npm.cmd run check:security   # after a build; scans dist/ + src/
 ```
 
 `npm.cmd run build` must finish with **0 errors, 0 warnings, 0 hints**. There are
 no unit tests; validate changes in a browser and with the build.
+
+## Git workflow
+
+- **Never commit to `main`.** Every request gets its own branch, even a one-line
+  fix, and every change lands through a pull request.
+- Branch names: `feat/<slug>`, `fix/<slug>`, `chore/<slug>`, `sec/<slug>`,
+  `docs/<slug>`. One branch per request; do not mix unrelated changes.
+- If a request arrives while you are on `main`, create the branch first
+  (`git switch -c feat/<slug>`) and only then start editing.
+- Open a PR against `main`. The **Security** workflow must pass before merge and
+  `main` is protected, so direct pushes are rejected.
+- Do not force-push `main`, rewrite published history, or merge with red checks.
+- `main` is what deploys to production; feature branches never publish.
 
 ## Source of truth
 
@@ -78,7 +92,9 @@ src/
   styles/             global.css (Tailwind @theme tokens + base)
 public/               CNAME, robots.txt, .nojekyll, favicon, OG images, js/menu.js,
                        js/press-carousel.js
-.github/              Pages deploy workflow + Dependabot
+scripts/              check-security.mjs — security invariants for the build
+.agents/skills/       security + workflow skills (see docs/SECURITY-SKILLS.md)
+.github/              Pages deploy + Security workflows, PR template, Dependabot
 ```
 
 - Static output only; no React/Vue/Svelte, CMS, database, server, forms, cookies
@@ -105,6 +121,29 @@ public/               CNAME, robots.txt, .nojekyll, favicon, OG images, js/menu.
   `/sitemap.xml`.
 - Keep `SITE.updated`, the sitemap `lastmod` and the `llms.txt` date in sync.
 
+## Security review
+
+Skills live in `.agents/skills/`; provenance and licenses are in
+`docs/SECURITY-SKILLS.md`. Load the matching skill **before** editing, and run
+`npm.cmd run check:security` before reporting a change as done.
+
+| Change touches | Load first |
+| --- | --- |
+| `src/pages/`, `src/components/`, `src/layouts/`, `src/lib/`, `public/js/` | `client-side-security` |
+| CSP, meta tags, headers | `client-side-security`, `http-security-headers` |
+| `package.json`, `package-lock.json` | `dependency-vulnerability-audit`, `supply-chain-risk-auditor` |
+| `.github/`, CI or deploy config | `secure-by-design` |
+| Any diff | `secrets-detection-patterns` |
+| An AI-authored diff | `ai-code-review` |
+
+`npm.cmd run check:security` fails on a missing or weakened CSP, an unhashed
+inline script, a third-party subresource, an iframe, an inline event handler, a
+non-HTTPS or badly-rel'd external link, `set:html` outside the JSON-LD, and
+`innerHTML`/`eval`-style sinks in `public/js/`.
+
+Never weaken a check to make it pass. If a rule is genuinely wrong, change the
+rule, the script and this file together in the same PR.
+
 ## Deployment and security
 
 - Deploy via `.github/workflows/deploy.yml` (GitHub Actions → Pages). The Pages
@@ -112,6 +151,11 @@ public/               CNAME, robots.txt, .nojekyll, favicon, OG images, js/menu.
   stay in place.
 - Runbook and rollback: `docs/DEPLOYMENT.md`.
 - Keep the lockfile committed and use `npm ci` in CI.
+- `.github/workflows/security.yml` runs on every pull request (gitleaks, `npm audit
+  --audit-level=high`, build, `check:security`) and `deploy.yml` calls it, so a
+  push to `main` cannot publish if it fails.
+- Branch protection on `main`: require a pull request and the **Security / Audit**
+  check. That is what enforces the branch rule for every agent, not just OpenCode.
 - No secrets, env vars, analytics, iframes or third-party scripts.
 - External links use `target="_blank"` with `rel="noopener noreferrer"` and a
   screen-reader new-tab hint.
@@ -129,6 +173,7 @@ not delete that tag, and do not re-add those files. Everything is generated from
 ## Validation
 
 - `npm.cmd run build` (types + build).
+- `npm.cmd run check:security` (security invariants; needs a build first).
 - Load `/`, `/press-kit/`, `/404.html`, `/llms.txt`, `/index.md`,
   `/press-kit.md` and `/sitemap.xml` in a browser/preview.
 - Check 375–390px, 768px and 1400px layouts, keyboard focus, mobile menu open/close
