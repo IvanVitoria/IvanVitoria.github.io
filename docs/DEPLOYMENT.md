@@ -102,7 +102,8 @@ Also check:
 The old site is recoverable from the `pre-astro` tag only (the legacy root files
 have been removed from the working tree).
 
-1. Revert the merge commit on `main`, or restore the legacy files from the tag:
+1. Revert the merge commit on `main`, or restore the legacy files from the tag
+   (emergency only — this is the one documented exception to the PR rule):
 
    ```powershell
    git checkout pre-astro -- index.html css js sass fonts images robots.txt sitemap.xml llms.txt CNAME
@@ -148,3 +149,30 @@ git checkout pre-astro -- index.html css js sass fonts images robots.txt sitemap
   `id-token: write`. No repository secrets are required.
 - Dependabot watches npm and GitHub Actions. Review its PRs; do not auto-merge.
 - Keep 2FA on the GitHub account and branch protection/PR-only changes on `main`.
+
+## Security gate and branch protection
+
+Every change goes through a branch and a pull request. `main` is protected and is
+the only branch that deploys.
+
+- `.github/workflows/security.yml` runs on every pull request: gitleaks, `npm audit
+  --audit-level=high`, `npm run build` and `npm run check:security`.
+- `deploy.yml` calls the same workflow as a `security` job and `build` depends on
+  it, so a direct push to `main` cannot publish a failing build.
+- `scripts/check-security.mjs` encodes the site-specific rules: meta CSP present
+  and unweakened, every inline script hash-matched, no third-party subresources,
+  no iframes or inline handlers, HTTPS-only and `rel="noopener noreferrer"` on
+  external links, no `set:html` outside the JSON-LD, no XSS sinks in `public/js/`.
+
+One-time setup in GitHub → **Settings → Branches → Add branch protection rule**
+for `main`:
+
+1. Require a pull request before merging (1 approval is optional for a solo repo).
+2. Require status checks to pass: select **Audit** (workflow **Security**).
+3. Block force pushes and deletions.
+
+That is the layer that holds for every agent and for local work, regardless of
+which assistant produced the change.
+
+If gitleaks reports a false positive, add a scoped allowlist in a `.gitleaks.toml`
+instead of disabling the job.

@@ -15,7 +15,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  security:
+    uses: ./.github/workflows/security.yml
+
   build:
+    needs: security
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:

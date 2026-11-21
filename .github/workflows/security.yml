@@ -1,0 +1,48 @@
+name: Security
+
+# Runs on every pull request, and is called by deploy.yml so a push to main
+# cannot publish without passing the same checks.
+on:
+  pull_request:
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    name: Audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      # Free for public/personal repositories; set GITLEAKS_LICENSE for orgs.
+      - name: Scan for secrets
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # No write permission needed: findings go to the job summary.
+          GITLEAKS_ENABLE_COMMENTS: false
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Audit dependencies
+        run: npm audit --audit-level=high
+
+      - name: Build
+        run: npm run build
+
+      - name: Check security invariants
+        run: npm run check:security
