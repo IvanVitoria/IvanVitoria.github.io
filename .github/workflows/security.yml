@@ -22,8 +22,9 @@ jobs:
           fetch-depth: 0
 
       # Free for public/personal repositories; set GITLEAKS_LICENSE for orgs.
+      # v3 is the Node 24 runtime bump; v2 runs on the deprecated Node 20.
       - name: Scan for secrets
-        uses: gitleaks/gitleaks-action@v2
+        uses: gitleaks/gitleaks-action@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # No write permission needed: findings go to the job summary.
